@@ -1,0 +1,60 @@
+package martin.ufc.model;
+
+public class Tamagotchi {
+    public static final int DEFAULT_ATTRIBUTE_VALUE = 50;
+    public static final int MINOR_VALUE = 5;
+    public static final int MEDIUM_VALUE = 15;
+    public static final int MAJOR_VALUE = 30;
+    public static final int HUGE_VALUE = 50;
+    private int ageInDays;
+    private final String name;
+    private final Attribute food;
+    private final Attribute happy;
+    private final Attribute energy;
+
+    public Tamagotchi(String name) {
+        this.name = name;
+        ageInDays = 0;
+        food = new Attribute(DEFAULT_ATTRIBUTE_VALUE);
+        happy= new Attribute(DEFAULT_ATTRIBUTE_VALUE);
+        energy = new Attribute(DEFAULT_ATTRIBUTE_VALUE);
+    }
+
+    public void play() {
+        energy.decrementPercent(MINOR_VALUE);
+        food.decrementPercent(MINOR_VALUE);
+        happy.incrementPercent(MEDIUM_VALUE);
+    }
+
+    public void sleep(int timeSleepingInMinutes) {
+        int totalRecovered = timeSleepingInMinutes/6;
+        energy.incrementPercent(totalRecovered);
+        food.decrementPercent(totalRecovered/2);
+        happy.decrementPercent(MINOR_VALUE);
+    }
+
+    public void eat() {
+        food.incrementPercent(MAJOR_VALUE);
+        happy.incrementPercent(MINOR_VALUE);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getAgeInDays() {
+        return ageInDays;
+    }
+
+    public int getFood() {
+        return food.getPercent();
+    }
+
+    public int getHappy() {
+        return happy.getPercent();
+    }
+
+    public int getEnergy() {
+        return energy.getPercent();
+    }
+}
