@@ -1,8 +1,0 @@
-
-¢
-java:S1130	"…Remove the declaration of thrown exception 'martin.ufc.exception.InvalidMessageException', as it cannot be thrown from method's body.(‚Å¥8È«¹ í1
-T
-java:S6126
-"2Replace this String concatenation with Text block.(ÿ®§Êıÿÿÿÿ8ı¹ í1
-^
-java:S1128"<Remove this unused import 'martin.ufc.server.infra.Message'.(êèù›şÿÿÿÿ8Ê«¹ í1
