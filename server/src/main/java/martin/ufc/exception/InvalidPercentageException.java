@@ -1,4 +1,4 @@
-package martin.ufc.model;
+package martin.ufc.exception;
 
 public class InvalidPercentageException extends RuntimeException {
     public InvalidPercentageException(int percent) {

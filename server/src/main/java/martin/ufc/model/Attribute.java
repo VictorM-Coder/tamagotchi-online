@@ -1,5 +1,7 @@
 package martin.ufc.model;
 
+import martin.ufc.exception.InvalidPercentageException;
+
 public class Attribute {
     private byte percent;
     public Attribute(int percent){

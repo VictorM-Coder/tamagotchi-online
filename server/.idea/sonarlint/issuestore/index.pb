@@ -13,3 +13,15 @@ n
 .src/main/java/martin/ufc/server/TCPServer.java,8\1\81bbe6a2b12a99605e2ab3d9f46b1c56d10804a8
 ]
 -src/main/java/martin/ufc/util/LoggerUtil.java,2\f\2fe8f39ae9b2893dc97b7dd647861a52dd604acb
+b
+2src/main/java/martin/ufc/server/ClientHandler.java,4\3\43772624cf90ccedd8e667d0125dbc780a406425
+h
+8src/main/java/martin/ufc/server/infra/ClientHandler.java,8\e\8e8418e7e946688704623e2912ec106fd75237d6
+b
+2src/main/java/martin/ufc/server/infra/Message.java,a\0\a0589073ffb110773d87af0500c9acb18955e75e
+f
+6src/main/java/martin/ufc/server/infra/MessageType.java,8\e\8ee1c7e04d7a68c2ccab3a3764fb87e6957af8f8
+o
+?src/main/java/martin/ufc/exception/InvalidMessageException.java,a\f\afcac1f2f6d13ab672ff14d293905e858a3e8043
+r
+Bsrc/main/java/martin/ufc/exception/InvalidPercentageException.java,7\1\71eb76ea95e878c813b9d8fc9c511eff145bd06c
