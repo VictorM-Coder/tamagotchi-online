@@ -1,5 +1,6 @@
 package martin.ufc.server;
 
+import martin.ufc.model.TamagotchiKeeper;
 import martin.ufc.server.infra.ClientHandler;
 import martin.ufc.util.LoggerUtil;
 
@@ -9,6 +10,7 @@ import java.net.Socket;
 
 public class TCPServer {
     private static final int PORT = 12345;
+    private static final TamagotchiKeeper tamagotchiKeeper = new TamagotchiKeeper();
 
     public static void run() {
         try (ServerSocket server = new ServerSocket(PORT)) {
@@ -24,7 +26,7 @@ public class TCPServer {
     }
 
     private static void handleClient(Socket client) {
-        ClientHandler clientHandler = new ClientHandler(client);
+        ClientHandler clientHandler = new ClientHandler(client, tamagotchiKeeper);
         clientHandler.communicateWithClient();
         clientHandler.closeClient();
     }

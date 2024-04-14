@@ -8,34 +8,61 @@ public class Tamagotchi {
     public static final int HUGE_VALUE = 50;
     private int ageInDays;
     private final String name;
+    private boolean isSleeping;
     private final Attribute food;
     private final Attribute happy;
     private final Attribute energy;
 
+
+    public String toJSON() {
+        return "{"
+                + "\"name\": \"" + name + "\","
+                + "\"ageInDays\": " + ageInDays + ","
+                + "\"isSleeping\": " + isSleeping + ","
+                + "\"food\": " + getFood() + ","
+                + "\"happy\": " + getHappy() + ","
+                + "\"energy\": " + getEnergy()
+                + "}";
+    }
+
     public Tamagotchi(String name) {
         this.name = name;
         ageInDays = 0;
+        isSleeping = false;
         food = new Attribute(DEFAULT_ATTRIBUTE_VALUE);
         happy= new Attribute(DEFAULT_ATTRIBUTE_VALUE);
         energy = new Attribute(DEFAULT_ATTRIBUTE_VALUE);
     }
 
     public void play() {
-        energy.decrementPercent(MINOR_VALUE);
-        food.decrementPercent(MINOR_VALUE);
-        happy.incrementPercent(MEDIUM_VALUE);
+        if (isNotSleeping()) {
+            energy.decrementPercent(MINOR_VALUE);
+            food.decrementPercent(MINOR_VALUE);
+            happy.incrementPercent(MEDIUM_VALUE);
+        }
     }
 
-    public void sleep(int timeSleepingInMinutes) {
-        int totalRecovered = timeSleepingInMinutes/6;
-        energy.incrementPercent(totalRecovered);
-        food.decrementPercent(totalRecovered/2);
-        happy.decrementPercent(MINOR_VALUE);
+    public void sleep() {
+        if (isNotSleeping()) {
+            isSleeping = true;
+        }
+    }
+
+    public void awake(int timeSleepingInMinutes) {
+        if (isSleeping) {
+            int totalRecovered = timeSleepingInMinutes/6;
+            energy.incrementPercent(totalRecovered);
+            food.decrementPercent(totalRecovered/2);
+            happy.decrementPercent(MINOR_VALUE);
+            isSleeping = false;
+        }
     }
 
     public void eat() {
-        food.incrementPercent(MAJOR_VALUE);
-        happy.incrementPercent(MINOR_VALUE);
+        if (isNotSleeping()) {
+            food.incrementPercent(MAJOR_VALUE);
+            happy.incrementPercent(MINOR_VALUE);
+        }
     }
 
     public String getName() {
@@ -56,5 +83,9 @@ public class Tamagotchi {
 
     public int getEnergy() {
         return energy.getPercent();
+    }
+
+    private boolean isNotSleeping() {
+        return !isSleeping;
     }
 }
