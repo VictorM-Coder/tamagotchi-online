@@ -1,12 +1,15 @@
 package martin.ufc.model;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+
 public class Tamagotchi {
     public static final int DEFAULT_ATTRIBUTE_VALUE = 50;
     public static final int MINOR_VALUE = 5;
     public static final int MEDIUM_VALUE = 15;
     public static final int MAJOR_VALUE = 30;
     public static final int HUGE_VALUE = 50;
-    private int ageInDays;
+    private LocalDate birthday;
     private final String name;
     private boolean isSleeping;
     private final Attribute food;
@@ -17,7 +20,7 @@ public class Tamagotchi {
     public String toJSON() {
         return "{"
                 + "\"name\": \"" + name + "\","
-                + "\"ageInDays\": " + ageInDays + ","
+                + "\"ageInDays\": " + getAgeInDays() + ","
                 + "\"isSleeping\": " + isSleeping + ","
                 + "\"food\": " + getFood() + ","
                 + "\"happy\": " + getHappy() + ","
@@ -27,7 +30,7 @@ public class Tamagotchi {
 
     public Tamagotchi(String name) {
         this.name = name;
-        ageInDays = 0;
+        birthday = LocalDate.now();
         isSleeping = false;
         food = new Attribute(DEFAULT_ATTRIBUTE_VALUE);
         happy= new Attribute(DEFAULT_ATTRIBUTE_VALUE);
@@ -70,7 +73,7 @@ public class Tamagotchi {
     }
 
     public int getAgeInDays() {
-        return ageInDays;
+        return (int) ChronoUnit.DAYS.between(birthday, LocalDate.now());
     }
 
     public int getFood() {
