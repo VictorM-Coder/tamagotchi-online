@@ -3,15 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Tamagotchi Online</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="stylesheets/default.css">
+    <link rel="stylesheet" href="stylesheets/main.css">
 </head>
 <body class="bg-p0">
 
 <main class="pixel-border tamagotchi-screen">
-    <h1>Hello, Hello, Hello</h1>
-    <div>
-        <button>Connect</button>
-    </div>
+    <h1 class="title-h1">Welcome to online Tamagotchi</h1>
+    <form class="form-login mt-4">
+        <div class="form-internal">
+            <div>
+                <label for="inputOwner" class="d-block">Who are you?</label>
+                <input id="inputOwner" type="text" class="input-tamagotchi d-block mt-2 pixel-border">
+            </div>
+
+            <div>
+                <label for="inputCatIp" class="d-block">Where is your pet?</label>
+                <input id="inputCatIp" type="text" class="input-tamagotchi pixel-border d-block mt-2">
+            </div>
+        </div>
+        <button class="mt-3 margin-start-auto">Connect</button>
+    </form>
 </main>
 </body>
 </html>

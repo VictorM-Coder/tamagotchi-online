@@ -1,0 +1,61 @@
+.title-h1 {
+    font-size: 1.5em;
+    line-height: 1.5em;
+}
+
+.tamagotchi-screen {
+    background-color: var(--green-0);
+    max-width: 800px;
+    padding: 16px;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.d-block {
+    display: block;
+}
+
+.mt-4 {
+    margin-top: 40px;
+}
+
+.mt-3 {
+    margin-top: 32px;
+}
+
+.mt-2 {
+    margin-top: 12px;
+}
+
+
+.margin-start-auto {
+    margin-left: auto;
+}
+
+.form-login {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.input-tamagotchi {
+    padding: 16px 8px;
+    font-size: 1em;
+    font-family: dogica, monospace;
+    background-color: var(--green-0);
+}
+
+.form-internal {
+    display: flex;
+    justify-content: space-between;
+}
+
+button, .pixel-border {
+    border-style: solid;
+    border-width: 4px;
+    border-color: var(--green-4);
+    border-image-slice: 2;
+    border-image-source: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath d='M0 2h2v2H0zM2 0h2v2H2zM4 2h2v2H4zM2 4h2v2H2z' fill='%232D1B00' /%3E%3C/svg%3E");
+}
