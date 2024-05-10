@@ -21,7 +21,10 @@
                 <input id="inputCatIp" type="text" class="input-tamagotchi pixel-border d-block mt-2">
             </div>
         </div>
-        <button id="button-connect" class="margin-start-auto">Connect</button>
+        <div class="action-bar-login">
+            <button id="button-signin" class="margin-start-auto me-3">Don't have a Tamagotchi</button>
+            <button id="button-connect">Connect</button>
+        </div>
     </form>
 </main>
 
@@ -56,6 +59,29 @@
         </div>
     </section>
 </main>
+
+<main id="signin-screen" class="pixel-border tamagotchi-screen">
+    <h1 class="title-h1">Create your own Tamagotchi!</h1>
+    <form class="form-login mt-4">
+        <div class="form-internal">
+            <div class="mb-3">
+                <label for="inputTamagotchiName" class="d-block">Give your pet a name!</label>
+                <input id="inputTamagotchiName" type="text" class="input-tamagotchi d-block mt-2 pixel-border">
+            </div>
+
+            <div class="mb-3">
+                <label for="inputSignTamagotchiId" class="d-block">Where is your pet?</label>
+                <input id="inputSignTamagotchiId" type="text" class="input-tamagotchi pixel-border d-block mt-2">
+            </div>
+        </div>
+        <div class="action-bar-login">
+            <button id="button-cancel-signin" class="margin-start-auto me-3">Cancel</button>
+            <button id="button-complete-signin">Create Tamagotchi</button>
+        </div>
+    </form>
+</main>
+
 </body>
 <script type="text/javascript" src="scripts/index.js"></script>
+<script type="text/javascript" src="scripts/sign-in.js"></script>
 </html>

@@ -31,6 +31,10 @@
     margin-bottom: 32px;
 }
 
+.me-3 {
+    margin-right: 32px;
+}
+
 .margin-start-auto {
     margin-left: auto;
 }
@@ -110,4 +114,9 @@ button, .pixel-border {
     justify-content: space-around;
     flex-wrap: wrap;
     margin-top: -12px;
+}
+
+.action-bar-login {
+    display: flex;
+    justify-content: flex-end;
 }
