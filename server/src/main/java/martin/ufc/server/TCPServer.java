@@ -19,6 +19,7 @@ public class TCPServer {
                 Socket client = server.accept();
                 LoggerUtil.logInfo("Client Connected: " + client.getInetAddress());
                 handleClient(client);
+                LoggerUtil.logInfo("Client Disconnected: " + client.getInetAddress());
             }
         } catch (IOException ioException) {
             LoggerUtil.logError("Fail during server starting");

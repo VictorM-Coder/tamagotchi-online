@@ -5,9 +5,7 @@ import martin.ufc.exception.TamagotchiNotCreatedException;
 import martin.ufc.model.TamagotchiKeeper;
 import martin.ufc.util.LoggerUtil;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 
 public class ClientHandler {
@@ -24,7 +22,7 @@ public class ClientHandler {
                 DataInputStream dataInput = new DataInputStream(client.getInputStream());
                 DataOutputStream dataOutput = new DataOutputStream(client.getOutputStream());
         ) {
-            handleClientMessage(dataInput.readUTF());
+            handleClientMessage(readInputStream(dataInput));
             dataOutput.writeUTF(tamagotchiKeeper.getTamagotchi().toJSON());
         } catch (IOException | TamagotchiNotCreatedException e) {
             LoggerUtil.logError(e.getMessage());
@@ -75,4 +73,8 @@ public class ClientHandler {
         }
     }
 
+    private String readInputStream(DataInputStream inputStream) throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+        return in.readLine();
+    }
 }
