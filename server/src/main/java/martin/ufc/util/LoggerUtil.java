@@ -7,8 +7,8 @@ public class LoggerUtil {
     private static final Logger logger = LogManager.getLogger();
     private LoggerUtil() {}
 
-    public static void logInfo(String info) {
-        logger.info(info);
+    public static void logTrace(String info) {
+        logger.trace(info);
     }
 
     public static void logError(String error) {

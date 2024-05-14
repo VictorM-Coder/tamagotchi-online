@@ -14,12 +14,12 @@ public class TCPServer {
 
     public static void run() {
         try (ServerSocket server = new ServerSocket(PORT)) {
-            LoggerUtil.logInfo("Server listening to the port " + PORT);
+            LoggerUtil.logTrace("Server listening to the port " + PORT);
             while (true) {
                 Socket client = server.accept();
-                LoggerUtil.logInfo("Client Connected: " + client.getInetAddress());
+                LoggerUtil.logTrace("Client Connected: " + client.getInetAddress());
                 handleClient(client);
-                LoggerUtil.logInfo("Client Disconnected: " + client.getInetAddress());
+                LoggerUtil.logTrace("Client Disconnected: " + client.getInetAddress());
             }
         } catch (IOException ioException) {
             LoggerUtil.logError("Fail during server starting");

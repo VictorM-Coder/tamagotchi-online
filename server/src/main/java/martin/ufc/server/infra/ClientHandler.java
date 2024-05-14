@@ -20,10 +20,12 @@ public class ClientHandler {
     public void communicateWithClient() {
         try (
                 DataInputStream dataInput = new DataInputStream(client.getInputStream());
-                DataOutputStream dataOutput = new DataOutputStream(client.getOutputStream());
+                OutputStream dataOutput = client.getOutputStream();
         ) {
             handleClientMessage(readInputStream(dataInput));
-            dataOutput.writeUTF(tamagotchiKeeper.getTamagotchi().toJSON());
+
+            byte[] message = tamagotchiKeeper.getTamagotchi().toJSON().getBytes();
+            dataOutput.write(message);
         } catch (IOException | TamagotchiNotCreatedException e) {
             LoggerUtil.logError(e.getMessage());
         }
@@ -33,7 +35,7 @@ public class ClientHandler {
         try {
             client.close();
         } catch (IOException e) {
-            LoggerUtil.logInfo(e.getMessage());
+            LoggerUtil.logTrace(e.getMessage());
         }
     }
 
@@ -50,22 +52,22 @@ public class ClientHandler {
         switch (message.getMessageType()) {
             case EAT:
                 tamagotchiKeeper.feed();
-                LoggerUtil.logInfo("tamagothi eating");
+                LoggerUtil.logTrace("tamagothi eating");
                 break;
             case SLEEP:
                 tamagotchiKeeper.putToSleep();
-                LoggerUtil.logInfo("tamagothi sleeping");
+                LoggerUtil.logTrace("tamagothi sleeping");
                 break;
             case PLAY:
                 tamagotchiKeeper.putToPlay();
-                LoggerUtil.logInfo("tamagothi playing");
+                LoggerUtil.logTrace("tamagothi playing");
                 break;
             case NAME:
                 tamagotchiKeeper.createTamagotchi(message.getBody());
-                LoggerUtil.logInfo("tamagothi created: " + message.getBody());
+                LoggerUtil.logTrace("tamagothi created: " + message.getBody());
                 break;
             case GET:
-                LoggerUtil.logInfo("get tamagothi: " + tamagotchiKeeper.getTamagotchi());
+                LoggerUtil.logTrace("get tamagothi: " + tamagotchiKeeper.getTamagotchi());
                 break;
             default:
                 LoggerUtil.logError("Ação não reconhecida");
