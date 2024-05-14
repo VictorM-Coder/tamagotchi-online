@@ -19,7 +19,7 @@ buttonCreateTamagotchi.addEventListener("click", function (ev) {
     } else if (id.length === 0) {
         window.alert("Please, fill the ip field")
     } else {
-
+        createTamagotchi("victor", "vlade")
     }
 })
 
