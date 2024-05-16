@@ -1,45 +1,40 @@
-const loginScreen = document.getElementById("login-screen")
-const tamagotchiScreen = document.getElementById("tamagotchi-screen")
-const signInScreen = document.getElementById("signin-screen")
+const loginScreen = document.createElement("login-screen")
+const signInScreen = document.createElement("sign-in-screen")
+const tamagotchiScreen = document.createElement("tamagotchi-screen")
 
-const buttonConnect = document.getElementById("button-connect")
-const buttonSignIn = document.getElementById("button-signin")
+document.body.appendChild(loginScreen)
 
-const screenSelected = loginScreen
-
-let tamagotchi = null
-
-if (loginScreen === screenSelected) {
-    tamagotchiScreen.style.display = "none"
-    signInScreen.style.display = "none"
-}
-
-//EVENTS
-buttonConnect.addEventListener("click", function (ev) {
-    ev.preventDefault()
-    goToTamagotchiScreen()
-})
-
-buttonSignIn.addEventListener("click", function (ev) {
-    ev.preventDefault()
+loginScreen.addEventListener("signInEvent", () => {
     goToSignInScreen()
 })
 
+loginScreen.addEventListener("connectEvent", () => {
+    goToTamagotchiScreen(null)
+})
 
+signInScreen.addEventListener("tamagotchiSubmited", async (ev) => {
+    const response = await createTamagotchi(ev.detail.username, ev.detail.tamagotchiName)
+
+    if (response) {
+        console.log(response)
+    } else {
+        window.alert("Falha ao criar o tamagotchi")
+    }
+})
+
+let tamagotchi = null
+
+//
 //AUX FUNCTIONS
 function goToTamagotchiScreen(tamagotchiData) {
     tamagotchi = tamagotchiData
-    loginScreen.style.display = "none"
-    signInScreen.style.display = "none"
-    tamagotchiScreen.style.display = "block"
+    document.body.replaceChildren(tamagotchiScreen)
 }
 
 function goToSignInScreen() {
-    loginScreen.style.display = "none"
-    signInScreen.style.display = "block"
+    document.body.replaceChildren(signInScreen)
 }
 
 function goToLoginFromSignInScreen() {
-    signInScreen.style.display = "none"
-    loginScreen.style.display = "block"
+    document.body.replaceChildren(loginScreen)
 }

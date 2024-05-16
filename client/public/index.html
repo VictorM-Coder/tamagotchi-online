@@ -7,87 +7,14 @@
     <link rel="stylesheet" href="stylesheets/main.css">
 </head>
 <body class="bg-p0">
-<main id="login-screen" class="pixel-border tamagotchi-screen">
-    <h1 class="title-h1">Welcome to online Tamagotchi</h1>
-    <form class="form-login mt-4">
-        <div class="form-internal">
-            <div class="mb-3">
-                <label for="inputOwner" class="d-block">Who are you?</label>
-                <input id="inputOwner" type="text" class="input-tamagotchi d-block mt-2 pixel-border">
-            </div>
+<template id="template-screen">
 
-            <div class="mb-3">
-                <label for="inputCatIp" class="d-block">Where is your pet?</label>
-                <input id="inputCatIp" type="text" class="input-tamagotchi pixel-border d-block mt-2">
-            </div>
-        </div>
-        <div class="action-bar-login">
-            <button id="button-signin" class="margin-start-auto me-3">Don't have a Tamagotchi</button>
-            <button id="button-connect">Connect</button>
-        </div>
-    </form>
-</main>
-
-<main id="tamagotchi-screen" class="pixel-border tamagotchi-screen">
-    <section class="cat-container">
-        <div>
-            <div class="cat-box pixel-border mb-2">
-                <img src="assets/cat-default.gif" alt="Cat image" class="image-fluid">
-            </div>
-            <div class="status">
-                <span class="status-bar pixel-border">
-                    <img src="assets/happy-icon.png" alt="Happy face icon" class="image-fluid">
-                </span>
-                <span class="status-bar pixel-border">
-                    <img src="assets/meal-icon.png" alt="Fish meal icon" class="image-fluid">
-                </span>
-                <span class="status-bar pixel-border">
-                    <img src="assets/energy-icon.png" alt="Energy thunder icon" class="image-fluid">
-                </span>
-            </div>
-        </div>
-        <div class="cat-actions">
-            <div class="chat pixel-border mb-2">
-                Chat
-            </div>
-            <div class="action-bar">
-                <button class="mt-2">Feed</button>
-                <button class="mt-2">Sleep</button>
-                <button class="mt-2">Play</button>
-                <button class="mt-2">Disconect</button>
-            </div>
-        </div>
-    </section>
-</main>
-
-<main id="signin-screen" class="pixel-border tamagotchi-screen">
-    <h1 class="title-h1">Create your own Tamagotchi!</h1>
-    <form class="form-login mt-4">
-        <div class="form-internal">
-            <div class="mb-3">
-                <label for="inputSignUsername" class="d-block">What's your name?</label>
-                <input id="inputSignUsername" type="text" class="input-tamagotchi pixel-border d-block mt-2">
-            </div>
-
-            <div class="mb-3">
-                <label for="inputTamagotchiName" class="d-block">Give your pet a name!</label>
-                <input id="inputTamagotchiName" type="text" class="input-tamagotchi d-block mt-2 pixel-border">
-            </div>
-
-            <div class="mb-3">
-                <label for="inputSignTamagotchiId" class="d-block">Where is your pet?</label>
-                <input id="inputSignTamagotchiId" type="text" class="input-tamagotchi pixel-border d-block mt-2">
-            </div>
-        </div>
-        <div class="action-bar-login">
-            <button id="button-cancel-signin" class="margin-start-auto me-3">Cancel</button>
-            <button id="button-complete-signin">Create Tamagotchi</button>
-        </div>
-    </form>
-</main>
+</template>
 
 </body>
+<script type="text/javascript" src="scripts/components/LoginScreenComponent.js"></script>
+<script type="text/javascript" src="scripts/components/SingInScreenComponent.js"></script>
+<script type="text/javascript" src="scripts/components/TamagotchiScreen.js"></script>
 <script type="text/javascript" src="scripts/service.js"></script>
 <script type="text/javascript" src="scripts/index.js"></script>
-<script type="text/javascript" src="scripts/sign-in.js"></script>
 </html>
