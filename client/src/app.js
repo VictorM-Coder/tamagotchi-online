@@ -1,7 +1,7 @@
 const express = require("express")
 const net = require('net');
 const {json} = require("express");
-const tamagotchiController = require("./api/controllers/TamagotchiController");
+const tamagotchiController = require("./api/TamagotchiController");
 
 const app = express()
 

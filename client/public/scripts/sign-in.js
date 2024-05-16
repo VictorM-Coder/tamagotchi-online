@@ -6,7 +6,7 @@ let inputTamagotchiId = document.getElementById("inputSignTamagotchiId")
 
 
 //EVENTS
-buttonCreateTamagotchi.addEventListener("click", function (ev) {
+buttonCreateTamagotchi.addEventListener("click", async function (ev) {
     ev.preventDefault()
 
     let name = inputTamagotchiName.value
@@ -19,7 +19,8 @@ buttonCreateTamagotchi.addEventListener("click", function (ev) {
     } else if (id.length === 0) {
         window.alert("Please, fill the ip field")
     } else {
-        createTamagotchi("victor", "vlade")
+        //TODO melhorar a lógica para criação: adicionar um novo campo para o nome do usuário
+        await createTamagotchi("victor", "vlade")
     }
 })
 
