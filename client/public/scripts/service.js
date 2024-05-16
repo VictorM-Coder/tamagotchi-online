@@ -1,10 +1,10 @@
-function createTamagotchi(who, name) {
+function createTamagotchi(username, tamagotchiName) {
     return fetch("/api/create", {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ username: who, tamagotchiName: name })
+        body: JSON.stringify({ username: username, tamagotchiName: tamagotchiName })
     })
         .then(response => response.text())
         .then(data => {

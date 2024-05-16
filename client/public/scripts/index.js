@@ -1,13 +1,15 @@
-let loginScreen = document.getElementById("login-screen")
-let tamagotchiScreen = document.getElementById("tamagotchi-screen")
-let signInScreen = document.getElementById("signin-screen")
+const loginScreen = document.getElementById("login-screen")
+const tamagotchiScreen = document.getElementById("tamagotchi-screen")
+const signInScreen = document.getElementById("signin-screen")
 
-let buttonConnect = document.getElementById("button-connect")
-let buttonSignIn = document.getElementById("button-signin")
+const buttonConnect = document.getElementById("button-connect")
+const buttonSignIn = document.getElementById("button-signin")
 
-let screenSelected = loginScreen
+const screenSelected = loginScreen
 
-if (loginScreen == screenSelected) {
+let tamagotchi = null
+
+if (loginScreen === screenSelected) {
     tamagotchiScreen.style.display = "none"
     signInScreen.style.display = "none"
 }
@@ -25,8 +27,10 @@ buttonSignIn.addEventListener("click", function (ev) {
 
 
 //AUX FUNCTIONS
-function goToTamagotchiScreen() {
+function goToTamagotchiScreen(tamagotchiData) {
+    tamagotchi = tamagotchiData
     loginScreen.style.display = "none"
+    signInScreen.style.display = "none"
     tamagotchiScreen.style.display = "block"
 }
 
