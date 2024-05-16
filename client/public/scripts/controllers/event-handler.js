@@ -9,32 +9,16 @@ loginScreen.addEventListener("signInEvent", () => {
 })
 
 loginScreen.addEventListener("connectEvent", () => {
-    goToTamagotchiScreen(null)
+    goToTamagotchiScreen()
 })
 
 signInScreen.addEventListener("tamagotchiSubmited", async (ev) => {
     const response = await createTamagotchi(ev.detail.username, ev.detail.tamagotchiName)
 
     if (response) {
+        //todo salvar os valores da resposta
         console.log(response)
     } else {
         window.alert("Falha ao criar o tamagotchi")
     }
 })
-
-let tamagotchi = null
-
-//
-//AUX FUNCTIONS
-function goToTamagotchiScreen(tamagotchiData) {
-    tamagotchi = tamagotchiData
-    document.body.replaceChildren(tamagotchiScreen)
-}
-
-function goToSignInScreen() {
-    document.body.replaceChildren(signInScreen)
-}
-
-function goToLoginFromSignInScreen() {
-    document.body.replaceChildren(loginScreen)
-}
