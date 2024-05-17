@@ -8,7 +8,7 @@ function createTamagotchi(username, tamagotchiName) {
     })
         .then(response => response.text())
         .then(data => {
-            return data
+            return JSON.parse(data)
         })
         .catch(error => {
             console.error('Erro ao receber dados:', error);

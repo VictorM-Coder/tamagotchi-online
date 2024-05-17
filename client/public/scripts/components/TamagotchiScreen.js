@@ -1,6 +1,7 @@
 class TamagotchiScreenComponent extends HTMLElement {
     constructor() {
         super();
+        this._tamagotchi = null
     }
 
     connectedCallback() {
@@ -8,6 +9,9 @@ class TamagotchiScreenComponent extends HTMLElement {
             <main id="tamagotchi-screen" class="pixel-border tamagotchi-screen">
                 <section class="cat-container">
                     <div>
+                        <header id="tamagotchi-header" class="mb-2">
+                            Name - age
+                        </header>
                         <div class="cat-box pixel-border mb-2">
                             <img src="assets/cat-default.gif" alt="Cat image" class="image-fluid">
                         </div>
@@ -38,7 +42,8 @@ class TamagotchiScreenComponent extends HTMLElement {
             </main>
         `
 
-
+        const header = document.getElementById("tamagotchi-header")
+        header.innerText = `${this.tamagotchi.name} - ${this.tamagotchi.ageInDays} Days`
     }
 }
 

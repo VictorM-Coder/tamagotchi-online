@@ -14,10 +14,9 @@ loginScreen.addEventListener("connectEvent", () => {
 
 signInScreen.addEventListener("tamagotchiSubmited", async (ev) => {
     const response = await createTamagotchi(ev.detail.username, ev.detail.tamagotchiName)
-
     if (response) {
-        //todo salvar os valores da resposta
-        console.log(response)
+        tamagotchiScreen.tamagotchi = response
+        goToTamagotchiScreen()
     } else {
         window.alert("Falha ao criar o tamagotchi")
     }
