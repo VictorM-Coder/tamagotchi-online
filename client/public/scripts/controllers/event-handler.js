@@ -18,6 +18,6 @@ signInScreen.addEventListener("tamagotchiSubmited", async (ev) => {
         tamagotchiScreen.tamagotchi = response
         goToTamagotchiScreen()
     } else {
-        window.alert("Falha ao criar o tamagotchi")
+        window.alert("Failed to create the Tamagotchi")
     }
 })

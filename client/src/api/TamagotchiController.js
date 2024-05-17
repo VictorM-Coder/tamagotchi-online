@@ -13,4 +13,25 @@ router.post('/create', async (req, res) => {
     res.send(response)
 });
 
+router.put('/eat', async (req, res) => {
+    const username = req.body.username
+
+    const response = await service.createTamagotchi(username)
+    res.send(response)
+});
+
+router.put('/play', async (req, res) => {
+    const username = req.body.username
+
+    const response = await service.createTamagotchi(username)
+    res.send(response)
+});
+
+router.put('/sleep', async (req, res) => {
+    const username = req.body.username
+
+    const response = await service.createTamagotchi(username)
+    res.send(response)
+});
+
 module.exports = router
