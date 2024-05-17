@@ -17,13 +17,16 @@ class TamagotchiScreenComponent extends HTMLElement {
                         </div>
                         <div class="status">
                             <span class="status-bar pixel-border">
-                                <img src="assets/happy-icon.png" alt="Happy face icon" class="image-fluid">
+                                <progress class="progress-bar" value="10" max="100" id="pb-happiness"> </progress>
+                                <img src="assets/happy-icon.png" alt="Happy face icon" class="image-fluid icon-progress-bar">
                             </span>
                             <span class="status-bar pixel-border">
-                                <img src="assets/meal-icon.png" alt="Fish meal icon" class="image-fluid">
+                                <progress class="progress-bar" value="10" max="100" id="pb-hungry"> </progress>
+                                <img src="assets/meal-icon.png" alt="Fish meal icon" class="image-fluid icon-progress-bar">
                             </span>
                             <span class="status-bar pixel-border">
-                                <img src="assets/energy-icon.png" alt="Energy thunder icon" class="image-fluid">
+                                <progress class="progress-bar" value="10" max="100" id="pb-energy"> </progress>
+                                <img src="assets/energy-icon.png" alt="Energy thunder icon" class="image-fluid icon-progress-bar">
                             </span>
                         </div>
                     </div>
