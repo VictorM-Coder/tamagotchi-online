@@ -1,7 +1,7 @@
 package martin.ufc.server;
 
-import martin.ufc.model.TamagotchiKeeper;
-import martin.ufc.server.infra.ClientHandler;
+import martin.ufc.model.tamagotchi.TamagotchiKeeper;
+import martin.ufc.server.infra.request.handlers.ClientHandler;
 import martin.ufc.util.LoggerUtil;
 
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class TCPServer {
                 LoggerUtil.logTrace("Client Disconnected: " + client.getInetAddress());
             }
         } catch (IOException ioException) {
-            LoggerUtil.logError("Fail during server starting");
+            LoggerUtil.logError("Server failed");
         }
     }
 

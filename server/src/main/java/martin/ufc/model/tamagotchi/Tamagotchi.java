@@ -1,9 +1,11 @@
-package martin.ufc.model;
+package martin.ufc.model.tamagotchi;
+
+import martin.ufc.model.JSONfier;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class Tamagotchi {
+public class Tamagotchi implements JSONfier {
     public static final int DEFAULT_ATTRIBUTE_VALUE = 50;
     public static final int MINOR_VALUE = 5;
     public static final int MEDIUM_VALUE = 15;
@@ -17,6 +19,7 @@ public class Tamagotchi {
     private final Attribute energy;
 
 
+    @Override
     public String toJSON() {
         return "{"
                 + "\"name\": \"" + name + "\","

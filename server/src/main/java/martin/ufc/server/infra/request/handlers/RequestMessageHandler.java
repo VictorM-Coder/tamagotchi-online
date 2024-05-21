@@ -1,51 +1,38 @@
-package martin.ufc.server.infra;
+package martin.ufc.server.infra.request.handlers;
 
 import martin.ufc.exception.InvalidMessageException;
+import martin.ufc.exception.RequestException;
 import martin.ufc.exception.TamagotchiNotCreatedException;
-import martin.ufc.model.TamagotchiKeeper;
+import martin.ufc.model.tamagotchi.TamagotchiKeeper;
+import martin.ufc.server.infra.request.message.Message;
+import martin.ufc.server.infra.response.Response;
 import martin.ufc.util.LoggerUtil;
 
-import java.io.*;
-import java.net.Socket;
-
-public class ClientHandler {
-    private Socket client;
+public class RequestMessageHandler {
     private TamagotchiKeeper tamagotchiKeeper;
-
-    public ClientHandler(Socket client, TamagotchiKeeper tamagotchiKeeper) {
-        this.client = client;
+    public RequestMessageHandler(TamagotchiKeeper tamagotchiKeeper) {
         this.tamagotchiKeeper = tamagotchiKeeper;
     }
 
-    public void communicateWithClient() {
-        try (
-                DataInputStream dataInput = new DataInputStream(client.getInputStream());
-                OutputStream dataOutput = client.getOutputStream();
-        ) {
-            handleClientMessage(readInputStream(dataInput));
-
-            byte[] message = tamagotchiKeeper.getTamagotchi().toJSON().getBytes();
-            dataOutput.write(message);
-        } catch (IOException | TamagotchiNotCreatedException e) {
-            LoggerUtil.logError(e.getMessage());
-        }
-    }
-
-    public void closeClient() {
+    public Response handleClientMessage(String request) {
+        Response response;
         try {
-            client.close();
-        } catch (IOException e) {
-            LoggerUtil.logTrace(e.getMessage());
-        }
-    }
-
-    private void handleClientMessage(String clientMessage) {
-        try {
-            Message message = new Message(clientMessage);
+            Message message = new Message(request);
             executeAction(message);
-        } catch (InvalidMessageException | TamagotchiNotCreatedException invalidMessageException) {
+            response = Response.createSuccessResponse(tamagotchiKeeper.getTamagotchi());
+
+        } catch (InvalidMessageException invalidMessageException) {
             LoggerUtil.logError(invalidMessageException.getMessage());
+            var errorRequest = new RequestException(invalidMessageException.getMessage());
+            response = Response.createErrorResponse(errorRequest);
+
+        } catch (TamagotchiNotCreatedException tamagotchiNotCreatedException) {
+            LoggerUtil.logError(tamagotchiNotCreatedException.getMessage());
+            var failRequest = new RequestException(tamagotchiNotCreatedException.getMessage());
+            response = Response.createFailResponse(failRequest);
         }
+
+        return response;
     }
 
     private void executeAction(Message message) throws TamagotchiNotCreatedException {
@@ -73,10 +60,5 @@ public class ClientHandler {
                 LoggerUtil.logError("Ação não reconhecida");
                 break;
         }
-    }
-
-    private String readInputStream(DataInputStream inputStream) throws IOException {
-        BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
-        return in.readLine();
     }
 }

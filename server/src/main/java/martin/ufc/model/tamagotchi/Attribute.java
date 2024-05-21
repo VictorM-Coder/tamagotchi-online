@@ -1,4 +1,4 @@
-package martin.ufc.model;
+package martin.ufc.model.tamagotchi;
 
 import martin.ufc.exception.InvalidPercentageException;
 

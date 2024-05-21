@@ -1,4 +1,4 @@
-package martin.ufc.server.infra;
+package martin.ufc.server.infra.request.message;
 
 import martin.ufc.exception.InvalidMessageException;
 

@@ -1,7 +1,7 @@
-package martin.ufc.server.infra;
+package martin.ufc.server.infra.request.message;
 
 public enum MessageType {
-    EAT,
+     EAT,
     SLEEP,
     PLAY,
     NAME,
