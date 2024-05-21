@@ -81,6 +81,7 @@ button, .pixel-border {
 .cat-box {
     display: inline-block;
     max-width: 400px;
+    padding: 8px;
 }
 
 .cat-container {

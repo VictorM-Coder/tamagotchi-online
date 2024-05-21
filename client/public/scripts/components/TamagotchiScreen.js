@@ -8,11 +8,13 @@ class TamagotchiScreenComponent extends HTMLElement {
         const pbEnergy = document.getElementById("pb-energy")
         const pbHungry = document.getElementById("pb-hungry")
         const pbHappiness = document.getElementById("pb-happiness")
+        const imgCat = document.getElementById("img-cat")
 
         if (pbEnergy && pbHungry && pbHappiness) {
             pbEnergy.value = this.tamagotchi.energy
             pbHungry.value = this.tamagotchi.food
             pbHappiness.value = this.tamagotchi.happy
+            imgCat.src = (!this.tamagotchi.isSleeping)? "assets/cat-sprites/cat-default.gif": "assets/cat-sprites/sleeping-cat.gif"
         }
     }
 
@@ -25,20 +27,20 @@ class TamagotchiScreenComponent extends HTMLElement {
                             Name - age
                         </header>
                         <div class="cat-box pixel-border mb-2">
-                            <img src="assets/cat-default.gif" alt="Cat image" class="image-fluid">
+                            <img id="img-cat" src="assets/cat-default.gif" alt="Cat image" class="image-fluid">
                         </div>
                         <div class="status">
                             <span class="status-bar pixel-border">
                                 <progress class="progress-bar" value="10" max="100" id="pb-happiness"> </progress>
-                                <img src="assets/happy-icon.png" alt="Happy face icon" class="image-fluid icon-progress-bar">
+                                <img src="assets/icons/happy-icon.png" alt="Happy face icon" class="image-fluid icon-progress-bar">
                             </span>
                             <span class="status-bar pixel-border">
                                 <progress class="progress-bar" value="10" max="100" id="pb-hungry"> </progress>
-                                <img src="assets/meal-icon.png" alt="Fish meal icon" class="image-fluid icon-progress-bar">
+                                <img src="assets/icons/meal-icon.png" alt="Fish meal icon" class="image-fluid icon-progress-bar">
                             </span>
                             <span class="status-bar pixel-border">
                                 <progress class="progress-bar" value="10" max="100" id="pb-energy"> </progress>
-                                <img src="assets/energy-icon.png" alt="Energy thunder icon" class="image-fluid icon-progress-bar">
+                                <img src="assets/icons/energy-icon.png" alt="Energy thunder icon" class="image-fluid icon-progress-bar">
                             </span>
                         </div>
                     </div>
@@ -47,10 +49,18 @@ class TamagotchiScreenComponent extends HTMLElement {
                             Chat
                         </div>
                         <div class="action-bar">
-                            <button id="btn-feed" class="mt-2">Feed</button>
-                            <button id="btn-sleep" class="mt-2">Sleep</button>
-                            <button id="btn-play" class="mt-2">Play</button>
-                            <button class="mt-2">Disconect</button>
+                            <button id="btn-feed" class="mt-2">
+                                Feed
+                            </button>
+                            <button id="btn-sleep" class="mt-2">
+                                Sleep
+                            </button>
+                            <button id="btn-play" class="mt-2">
+                                Play
+                            </button>
+                            <button class="mt-2">
+                                Disconect
+                            </button>
                         </div>
                     </div>
                 </section>
@@ -58,9 +68,6 @@ class TamagotchiScreenComponent extends HTMLElement {
         `
 
         const header = document.getElementById("tamagotchi-header")
-        const pbEnergy = document.getElementById("pb-energy")
-        const pbHungry = document.getElementById("pb-hungry")
-        const pbHappiness = document.getElementById("pb-happiness")
 
         const btnFeed = document.getElementById("btn-feed")
         const btnSleep = document.getElementById("btn-sleep")
