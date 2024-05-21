@@ -3,6 +3,7 @@ class TamagotchiScreenComponent extends HTMLElement {
         super();
         this._tamagotchi = null
     }
+    isWaiting = false
 
     updateData() {
         const pbEnergy = document.getElementById("pb-energy")
@@ -10,11 +11,16 @@ class TamagotchiScreenComponent extends HTMLElement {
         const pbHappiness = document.getElementById("pb-happiness")
         const imgCat = document.getElementById("img-cat")
 
+
         if (pbEnergy && pbHungry && pbHappiness) {
             pbEnergy.value = this.tamagotchi.energy
             pbHungry.value = this.tamagotchi.food
             pbHappiness.value = this.tamagotchi.happy
-            imgCat.src = (!this.tamagotchi.isSleeping)? "assets/cat-sprites/cat-default.gif": "assets/cat-sprites/sleeping-cat.gif"
+
+            if (!this.isWaiting) {
+                this.enableActions()
+                imgCat.src = (!this.tamagotchi.isSleeping)? "assets/cat-sprites/cat-default.gif": "assets/cat-sprites/sleeping-cat.gif"
+            }
         }
     }
 
@@ -72,18 +78,12 @@ class TamagotchiScreenComponent extends HTMLElement {
         const btnFeed = document.getElementById("btn-feed")
         const btnSleep = document.getElementById("btn-sleep")
         const btnPlay = document.getElementById("btn-play")
+        const imgCat = document.getElementById("img-cat")
 
         header.innerText = `${this.tamagotchi.name} - ${this.tamagotchi.ageInDays} Days`
         this.updateData()
 
         //EVENTS
-        btnFeed.addEventListener("click", () => {
-            const feedTamagochiEvent = new CustomEvent("feedTamagotchi", {
-                bubbles: true,
-            })
-            this.dispatchEvent(feedTamagochiEvent)
-        })
-
         btnSleep.addEventListener("click", () => {
             const putTamagochiToSleepEvent = new CustomEvent("putTamagochiToSleepEvent", {
                 bubbles: true,
@@ -91,12 +91,59 @@ class TamagotchiScreenComponent extends HTMLElement {
             this.dispatchEvent(putTamagochiToSleepEvent)
         })
 
-        btnPlay.addEventListener("click", () => {
-            const playWithTamagotchi = new CustomEvent("playWithTamagotchi", {
-                bubbles: true,
-            })
-            this.dispatchEvent(playWithTamagotchi)
+        btnFeed.addEventListener("click", () => {
+            this.disableActions()
+            imgCat.src = "assets/cat-sprites/cat-eating.gif"
+            this.isWaiting = true
+
+            setTimeout(() => {
+                imgCat.src = "assets/cat-sprites/cat-default.gif"
+                this.isWaiting = false
+                this.enableActions()
+                const feedTamagochiEvent = new CustomEvent("feedTamagotchi", {
+                    bubbles: true,
+                })
+                this.dispatchEvent(feedTamagochiEvent)
+            }, 3000)
+
         })
+
+        btnPlay.addEventListener("click", () => {
+            this.disableActions()
+            imgCat.src = "assets/cat-sprites/cat-jumping.gif"
+            this.isWaiting = true
+
+            setTimeout(() => {
+                imgCat.src = "assets/cat-sprites/cat-default.gif"
+                this.isWaiting = false
+                this.enableActions()
+
+                const playWithTamagotchi = new CustomEvent("playWithTamagotchi", {
+                    bubbles: true,
+                })
+                this.dispatchEvent(playWithTamagotchi)
+            }, 3000)
+        })
+    }
+
+    disableActions() {
+        const btnFeed = document.getElementById("btn-feed")
+        const btnSleep = document.getElementById("btn-sleep")
+        const btnPlay = document.getElementById("btn-play")
+
+        btnPlay.disabled = true
+        btnFeed.disabled = true
+        btnSleep.disabled = true
+    }
+
+    enableActions() {
+        const btnFeed = document.getElementById("btn-feed")
+        const btnSleep = document.getElementById("btn-sleep")
+        const btnPlay = document.getElementById("btn-play")
+
+        btnPlay.disabled = false
+        btnFeed.disabled = false
+        btnSleep.disabled = false
     }
 
     set tamagotchi(value) {

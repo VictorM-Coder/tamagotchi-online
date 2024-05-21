@@ -44,3 +44,8 @@ button:hover {
 button:active {
     scale: 0.95;
 }
+
+button:disabled {
+    opacity: 80%;
+    scale: 0.95;
+}
