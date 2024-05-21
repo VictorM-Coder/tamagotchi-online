@@ -4,6 +4,18 @@ class TamagotchiScreenComponent extends HTMLElement {
         this._tamagotchi = null
     }
 
+    updateData() {
+        const pbEnergy = document.getElementById("pb-energy")
+        const pbHungry = document.getElementById("pb-hungry")
+        const pbHappiness = document.getElementById("pb-happiness")
+
+        if (pbEnergy && pbHungry && pbHappiness) {
+            pbEnergy.value = this.tamagotchi.energy
+            pbHungry.value = this.tamagotchi.food
+            pbHappiness.value = this.tamagotchi.happy
+        }
+    }
+
     connectedCallback() {
         this.innerHTML = `
             <main id="tamagotchi-screen" class="pixel-border tamagotchi-screen">
@@ -35,9 +47,9 @@ class TamagotchiScreenComponent extends HTMLElement {
                             Chat
                         </div>
                         <div class="action-bar">
-                            <button class="mt-2">Feed</button>
-                            <button class="mt-2">Sleep</button>
-                            <button class="mt-2">Play</button>
+                            <button id="btn-feed" class="mt-2">Feed</button>
+                            <button id="btn-sleep" class="mt-2">Sleep</button>
+                            <button id="btn-play" class="mt-2">Play</button>
                             <button class="mt-2">Disconect</button>
                         </div>
                     </div>
@@ -46,7 +58,49 @@ class TamagotchiScreenComponent extends HTMLElement {
         `
 
         const header = document.getElementById("tamagotchi-header")
+        const pbEnergy = document.getElementById("pb-energy")
+        const pbHungry = document.getElementById("pb-hungry")
+        const pbHappiness = document.getElementById("pb-happiness")
+
+        const btnFeed = document.getElementById("btn-feed")
+        const btnSleep = document.getElementById("btn-sleep")
+        const btnPlay = document.getElementById("btn-play")
+
         header.innerText = `${this.tamagotchi.name} - ${this.tamagotchi.ageInDays} Days`
+        this.updateData()
+
+        //EVENTS
+        btnFeed.addEventListener("click", () => {
+            const feedTamagochiEvent = new CustomEvent("feedTamagotchi", {
+                bubbles: true,
+            })
+            this.dispatchEvent(feedTamagochiEvent)
+        })
+
+        btnSleep.addEventListener("click", () => {
+            const putTamagochiToSleepEvent = new CustomEvent("putTamagochiToSleepEvent", {
+                bubbles: true,
+            })
+            this.dispatchEvent(putTamagochiToSleepEvent)
+        })
+
+        btnPlay.addEventListener("click", () => {
+            const playWithTamagotchi = new CustomEvent("playWithTamagotchi", {
+                bubbles: true,
+            })
+            this.dispatchEvent(playWithTamagotchi)
+        })
+    }
+
+    set tamagotchi(value) {
+        if (typeof value === "object" && value !== null) {
+            this._tamagotchi = value;
+            this.updateData()
+        }
+    }
+
+    get tamagotchi() {
+        return this._tamagotchi;
     }
 }
 

@@ -16,21 +16,21 @@ router.post('/create', async (req, res) => {
 router.put('/eat', async (req, res) => {
     const username = req.body.username
 
-    const response = await service.createTamagotchi(username)
+    const response = await service.feedTamagotchi(username)
     res.send(response)
 });
 
 router.put('/play', async (req, res) => {
     const username = req.body.username
 
-    const response = await service.createTamagotchi(username)
+    const response = await service.playWithTamagotchi(username)
     res.send(response)
 });
 
 router.put('/sleep', async (req, res) => {
     const username = req.body.username
 
-    const response = await service.createTamagotchi(username)
+    const response = await service.putTamagotchiToSleep(username)
     res.send(response)
 });
 
