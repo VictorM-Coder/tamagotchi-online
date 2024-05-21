@@ -1,6 +1,7 @@
 const loginScreen = document.createElement("login-screen")
 const signInScreen = document.createElement("sign-in-screen")
 const tamagotchiScreen = document.createElement("tamagotchi-screen")
+const tamagotchiService = new TamagotchiService()
 
 document.body.appendChild(loginScreen)
 
@@ -13,7 +14,7 @@ loginScreen.addEventListener("connectEvent", () => {
 })
 
 signInScreen.addEventListener("tamagotchiSubmited", async (ev) => {
-    const response = await createTamagotchi(ev.detail.username, ev.detail.tamagotchiName)
+    const response = await tamagotchiService.createTamagotchi(ev.detail.username, ev.detail.tamagotchiName)
     if (response) {
         tamagotchiScreen.tamagotchi = response
         goToTamagotchiScreen()
@@ -23,7 +24,7 @@ signInScreen.addEventListener("tamagotchiSubmited", async (ev) => {
 })
 
 tamagotchiScreen.addEventListener("feedTamagotchi", async () => {
-    const response = await feedTamagotchi("jose")
+    const response = await tamagotchiService.feedTamagotchi("jose")
     if (response) {
         tamagotchiScreen.tamagotchi = response
     } else {
@@ -32,7 +33,7 @@ tamagotchiScreen.addEventListener("feedTamagotchi", async () => {
 })
 
 tamagotchiScreen.addEventListener("putTamagochiToSleepEvent", async () => {
-    const response = await putTamagotchiToSleep("jose")
+    const response = await tamagotchiService.putTamagotchiToSleep("jose")
     if (response) {
         tamagotchiScreen.tamagotchi = response
     } else {
@@ -41,7 +42,7 @@ tamagotchiScreen.addEventListener("putTamagochiToSleepEvent", async () => {
 })
 
 tamagotchiScreen.addEventListener("playWithTamagotchi", async () => {
-    const response = await playWithTamagotchi("jose")
+    const response = await tamagotchiService.playWithTamagotchi("jose")
     if (response) {
         tamagotchiScreen.tamagotchi = response
     } else {
