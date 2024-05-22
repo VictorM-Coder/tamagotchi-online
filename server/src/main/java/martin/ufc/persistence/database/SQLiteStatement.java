@@ -3,6 +3,7 @@ package martin.ufc.persistence.database;
 import martin.ufc.exception.SQLiteException;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SQLiteStatement {
@@ -41,6 +42,14 @@ public class SQLiteStatement {
             preparedStatement.execute();
         } catch (SQLException e) {
             throw new SQLiteException("Fail while setting value for a statement");
+        }
+    }
+
+    public ResultSet executeQuery() throws SQLiteException {
+        try {
+            return preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            throw new SQLiteException("Fail while finding a value from database");
         }
     }
 

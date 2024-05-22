@@ -11,6 +11,7 @@ public class Tamagotchi implements JSONfier {
     public static final int MEDIUM_VALUE = 15;
     public static final int MAJOR_VALUE = 30;
     public static final int HUGE_VALUE = 50;
+    private int id;
     private LocalDate birthday;
     private final String name;
     private boolean isSleeping;
@@ -18,6 +19,15 @@ public class Tamagotchi implements JSONfier {
     private final Attribute happy;
     private final Attribute energy;
 
+    public Tamagotchi(int id, String name, LocalDate birthday, boolean isSleeping, Attribute food, Attribute happy, Attribute energy) {
+        this.id = id;
+        this.name = name;
+        this.birthday = birthday;
+        this.isSleeping = isSleeping;
+        this.food = food;
+        this.happy = happy;
+        this.energy = energy;
+    }
 
     @Override
     public String toJSON() {
