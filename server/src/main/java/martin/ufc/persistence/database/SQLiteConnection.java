@@ -2,10 +2,7 @@ package martin.ufc.persistence.database;
 
 import martin.ufc.exception.SQLiteException;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class SQLiteConnection {
     private Connection connection;
@@ -42,6 +39,14 @@ public class SQLiteConnection {
             return connection.createStatement();
         } catch (SQLException e) {
             throw new SQLiteException("Fail while creating statement with SQLite database");
+        }
+    }
+
+    public PreparedStatement preparedStatement(String sql) throws SQLiteException {
+        try {
+            return connection.prepareStatement(sql);
+        } catch (SQLException e) {
+            throw new SQLiteException("Fail while creating prepared statement with SQLite database");
         }
     }
 }

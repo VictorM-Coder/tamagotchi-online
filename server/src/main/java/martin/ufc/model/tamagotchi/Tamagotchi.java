@@ -94,4 +94,12 @@ public class Tamagotchi implements JSONfier {
     private boolean isNotSleeping() {
         return !isSleeping;
     }
+
+    public boolean isSleeping() {
+        return isSleeping;
+    }
+
+    public LocalDate getBirthday() {
+        return birthday;
+    }
 }
