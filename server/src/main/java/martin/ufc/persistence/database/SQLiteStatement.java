@@ -45,6 +45,14 @@ public class SQLiteStatement {
         }
     }
 
+    public void executeUpdate() throws SQLiteException {
+        try {
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new SQLiteException("Fail while setting value for a statement");
+        }
+    }
+
     public ResultSet executeQuery() throws SQLiteException {
         try {
             return preparedStatement.executeQuery();

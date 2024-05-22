@@ -1,9 +1,6 @@
 package martin.ufc;
 
 import martin.ufc.exception.InvalidMessageException;
-import martin.ufc.exception.SQLiteException;
-import martin.ufc.model.tamagotchi.Tamagotchi;
-import martin.ufc.persistence.repository.TamagotchiRepository;
 import martin.ufc.server.TCPServer;
 import martin.ufc.util.LoggerUtil;
 

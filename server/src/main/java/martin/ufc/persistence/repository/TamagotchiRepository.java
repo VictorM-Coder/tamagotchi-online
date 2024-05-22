@@ -46,4 +46,23 @@ public class TamagotchiRepository {
             throw new SQLiteException(e.getMessage());
         }
     }
+
+    public static void update(int id, Tamagotchi tamagotchi) throws SQLiteException {
+        String sql = "UPDATE tamagotchi_tb " +
+                "SET isSleeping = ?, " +
+                "food = ?, " +
+                "happy = ?, " +
+                "energy = ? " +
+                "WHERE id = ?";
+
+        SQLiteStatement statement = new SQLiteStatement(sql);
+        statement.setInt(tamagotchi.isSleeping()? 1: 0)
+                .setInt(tamagotchi.getFood())
+                .setInt(tamagotchi.getHappy())
+                .setInt(tamagotchi.getEnergy())
+                .setInt(id)
+                .executeUpdate();
+
+        statement.close();
+    }
 }
