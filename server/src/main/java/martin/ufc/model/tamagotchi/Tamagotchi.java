@@ -112,4 +112,8 @@ public class Tamagotchi implements JSONfier {
     public LocalDate getBirthday() {
         return birthday;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

@@ -37,9 +37,10 @@ public class SQLiteStatement {
         return this;
     }
 
-    public void execute() throws SQLiteException {
+    public int executeInsert() throws SQLiteException {
         try {
             preparedStatement.execute();
+            return preparedStatement.getGeneratedKeys().getInt(1);
         } catch (SQLException e) {
             throw new SQLiteException("Fail while setting value for a statement");
         }
