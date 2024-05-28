@@ -5,5 +5,6 @@ CREATE TABLE IF NOT EXISTS tamagotchi_tb (
     isSleeping INTEGER,
     food INTEGER,
     happy INTEGER,
-    energy INTEGER
+    energy INTEGER,
+    startedSleeping TEXT
 );

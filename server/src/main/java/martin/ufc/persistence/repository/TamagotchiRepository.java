@@ -26,7 +26,7 @@ public class TamagotchiRepository {
                 .setInt(tamagotchi.getFood())
                 .setInt(tamagotchi.getHappy())
                 .setInt(tamagotchi.getEnergy())
-                .setString(tamagotchi.getStartedSleeping().toString())
+                .setString("")
                 .executeInsert();
 
         statement.close();
@@ -60,7 +60,7 @@ public class TamagotchiRepository {
                 .setInt(tamagotchi.getFood())
                 .setInt(tamagotchi.getHappy())
                 .setInt(tamagotchi.getEnergy())
-                .setString(tamagotchi.getStartedSleeping().toString())
+                .setString(defineValueOfStartedSleeping(tamagotchi.getStartedSleeping()))
                 .setInt(id)
                 .executeUpdate();
 
@@ -75,8 +75,26 @@ public class TamagotchiRepository {
         Attribute happy = new Attribute(resultSet.getInt("happy"));
         Attribute energy = new Attribute(resultSet.getInt("energy"));
         LocalDate birthday = LocalDate.parse(resultSet.getString("birthday"));
-        LocalDateTime startedSleeping = LocalDateTime.parse(resultSet.getString("startedSleeping"));
+        LocalDateTime startedSleeping = convertStartedSleepingFromResultSet(resultSet);
 
         return new Tamagotchi(id, name, birthday, isSleeping, food, happy, energy, startedSleeping);
+    }
+
+    private static String defineValueOfStartedSleeping(LocalDateTime startedSleeping) {
+        if (startedSleeping == null) {
+            return "";
+        } else {
+            return startedSleeping.toString();
+        }
+    }
+
+    private static LocalDateTime convertStartedSleepingFromResultSet(ResultSet resultSet) throws SQLException {
+        final var stringStartedSleeping = resultSet.getString("startedSleeping");
+
+        if (stringStartedSleeping.isEmpty()) {
+            return null;
+        } else {
+            return LocalDateTime.parse(stringStartedSleeping);
+        }
     }
 }

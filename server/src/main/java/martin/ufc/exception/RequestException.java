@@ -10,7 +10,7 @@ public class RequestException extends Exception implements JSONfier {
     @Override
     public String toJSON() {
         return "{"
-                + "\"message\": " + super.getMessage()
+                + "\"message\": \"" + super.getMessage() + "\""
                 + "}";
     }
 }
