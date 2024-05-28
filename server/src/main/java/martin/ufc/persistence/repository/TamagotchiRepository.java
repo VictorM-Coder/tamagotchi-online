@@ -8,11 +8,15 @@ import martin.ufc.persistence.database.SQLiteStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class TamagotchiRepository {
+    private TamagotchiRepository() {
+    }
+
     public static int add(Tamagotchi tamagotchi) throws SQLiteException {
-        String sql = "INSERT INTO tamagotchi_tb(name, birthday, isSleeping, food, happy, energy)" +
-                "values(?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO tamagotchi_tb(name, birthday, isSleeping, food, happy, energy, startedSleeping)" +
+                "values(?, ?, ?, ?, ?, ?, ?)";
 
         SQLiteStatement statement = new SQLiteStatement(sql);
         int id = statement
@@ -22,6 +26,7 @@ public class TamagotchiRepository {
                 .setInt(tamagotchi.getFood())
                 .setInt(tamagotchi.getHappy())
                 .setInt(tamagotchi.getEnergy())
+                .setString(tamagotchi.getStartedSleeping().toString())
                 .executeInsert();
 
         statement.close();
@@ -32,7 +37,7 @@ public class TamagotchiRepository {
         String sql = "SELECT * FROM tamagotchi_tb WHERE id = ?";
         SQLiteStatement statement = new SQLiteStatement(sql);
 
-        try (ResultSet resultSet = statement.setInt(id).executeQuery();) {
+        try (ResultSet resultSet = statement.setInt(id).executeQuery()) {
             Tamagotchi tamagotchi = convertResultSetToTamagotchi(resultSet);
             statement.close();
             return tamagotchi;
@@ -47,6 +52,7 @@ public class TamagotchiRepository {
                 "food = ?, " +
                 "happy = ?, " +
                 "energy = ? " +
+                "startedSleeping = ? " +
                 "WHERE id = ?";
 
         SQLiteStatement statement = new SQLiteStatement(sql);
@@ -54,6 +60,7 @@ public class TamagotchiRepository {
                 .setInt(tamagotchi.getFood())
                 .setInt(tamagotchi.getHappy())
                 .setInt(tamagotchi.getEnergy())
+                .setString(tamagotchi.getStartedSleeping().toString())
                 .setInt(id)
                 .executeUpdate();
 
@@ -68,7 +75,8 @@ public class TamagotchiRepository {
         Attribute happy = new Attribute(resultSet.getInt("happy"));
         Attribute energy = new Attribute(resultSet.getInt("energy"));
         LocalDate birthday = LocalDate.parse(resultSet.getString("birthday"));
+        LocalDateTime startedSleeping = LocalDateTime.parse(resultSet.getString("startedSleeping"));
 
-        return new Tamagotchi(id, name, birthday, isSleeping, food, happy, energy);
+        return new Tamagotchi(id, name, birthday, isSleeping, food, happy, energy, startedSleeping);
     }
 }

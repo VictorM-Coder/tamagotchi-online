@@ -3,6 +3,7 @@ package martin.ufc.model.tamagotchi;
 import martin.ufc.model.JSONfier;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 public class Tamagotchi implements JSONfier {
@@ -15,11 +16,12 @@ public class Tamagotchi implements JSONfier {
     private LocalDate birthday;
     private final String name;
     private boolean isSleeping;
+    private LocalDateTime startedSleeping;
     private final Attribute food;
     private final Attribute happy;
     private final Attribute energy;
 
-    public Tamagotchi(int id, String name, LocalDate birthday, boolean isSleeping, Attribute food, Attribute happy, Attribute energy) {
+    public Tamagotchi(int id, String name, LocalDate birthday, boolean isSleeping, Attribute food, Attribute happy, Attribute energy, LocalDateTime startedSleeping) {
         this.id = id;
         this.name = name;
         this.birthday = birthday;
@@ -27,6 +29,7 @@ public class Tamagotchi implements JSONfier {
         this.food = food;
         this.happy = happy;
         this.energy = energy;
+        this.startedSleeping = startedSleeping;
     }
 
     @Override
@@ -61,16 +64,19 @@ public class Tamagotchi implements JSONfier {
     public void sleep() {
         if (isNotSleeping()) {
             isSleeping = true;
+            startedSleeping = LocalDateTime.now();
         }
     }
 
-    public void awake(int timeSleepingInMinutes) {
+    public void awake() {
         if (isSleeping) {
+            int timeSleepingInMinutes = (int) ChronoUnit.MINUTES.between(LocalDateTime.now(), startedSleeping);
             int totalRecovered = timeSleepingInMinutes/6;
             energy.incrementPercent(totalRecovered);
             food.decrementPercent(totalRecovered/2);
             happy.decrementPercent(MINOR_VALUE);
             isSleeping = false;
+            startedSleeping = null;
         }
     }
 
@@ -115,5 +121,9 @@ public class Tamagotchi implements JSONfier {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public LocalDateTime getStartedSleeping() {
+        return startedSleeping;
     }
 }
