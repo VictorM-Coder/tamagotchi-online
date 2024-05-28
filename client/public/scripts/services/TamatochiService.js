@@ -3,16 +3,20 @@ class TamagotchiService {
         return this.#sendRequest("/api/create", "POST", { username, tamagotchiName });
     }
 
-    async feedTamagotchi(username) {
-        return this.#sendRequest("/api/eat", "PUT", { username });
+    async feedTamagotchi(username, id) {
+        return this.#sendRequest("/api/eat", "PUT", { username, id });
     }
 
-    async putTamagotchiToSleep(username) {
-        return this.#sendRequest("/api/sleep", "PUT", { username });
+    async putTamagotchiToSleep(username, id) {
+        return this.#sendRequest("/api/sleep", "PUT", { username, id });
     }
 
-    async playWithTamagotchi(username) {
-        return this.#sendRequest("/api/play", "PUT", { username });
+    async playWithTamagotchi(username, id) {
+        return this.#sendRequest("/api/play", "PUT", { username, id });
+    }
+
+    async awakeTamagotchi(username, id) {
+        return this.#sendRequest("/api/awake", "PUT", { username, id });
     }
 
     async #sendRequest(url, method, body) {

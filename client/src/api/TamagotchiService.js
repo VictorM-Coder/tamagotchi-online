@@ -7,18 +7,23 @@ class TamagotchiService {
         return await this.repository.communicateWithServer(request)
     }
 
-    async playWithTamagotchi(username)  {
-        const request = TamagotchiService.#buildRequest(username, "PLAY")
+    async playWithTamagotchi(username, id)  {
+        const request = TamagotchiService.#buildRequest(username, "PLAY", id)
         return await this.repository.communicateWithServer(request)
     }
 
-    async putTamagotchiToSleep(username)  {
-        const request = TamagotchiService.#buildRequest(username, "SLEEP")
+    async putTamagotchiToSleep(username, id)  {
+        const request = TamagotchiService.#buildRequest(username, "SLEEP", id)
         return await this.repository.communicateWithServer(request)
     }
 
-    async feedTamagotchi(username)  {
-        const request = TamagotchiService.#buildRequest(username, "EAT")
+    async feedTamagotchi(username, id)  {
+        const request = TamagotchiService.#buildRequest(username, "EAT", id)
+        return await this.repository.communicateWithServer(request)
+    }
+
+    async awakeTamagotchi(username, id)  {
+        const request = TamagotchiService.#buildRequest(username, "AWAKE", id)
         return await this.repository.communicateWithServer(request)
     }
 
