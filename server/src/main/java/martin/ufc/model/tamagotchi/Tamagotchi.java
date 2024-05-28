@@ -74,7 +74,7 @@ public class Tamagotchi implements JSONfier {
             int timeSleepingInMinutes = (int) ChronoUnit.MINUTES.between(LocalDateTime.now(), startedSleeping);
             int totalRecovered = timeSleepingInMinutes/6;
             energy.incrementPercent(totalRecovered);
-            food.decrementPercent(totalRecovered/2);
+            food.decrementPercent(totalRecovered/12);
             happy.decrementPercent(MINOR_VALUE);
             isSleeping = false;
             startedSleeping = null;

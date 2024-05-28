@@ -47,6 +47,7 @@ public class RequestMessageHandler {
         return switch (message.getMessageType()) {
             case EAT -> handleEatAction(message);
             case SLEEP -> handleSleepAction(message);
+            case AWAKE -> handleAwakeAction(message);
             case PLAY -> handlePlayAction(message);
             case NAME -> handleNameAction(message);
             case GET -> handleGetAction(message);
@@ -56,6 +57,7 @@ public class RequestMessageHandler {
             }
         };
     }
+
 
     private int getIdFromMessage(Message message) throws RequestException {
         try {
@@ -77,6 +79,14 @@ public class RequestMessageHandler {
         int id = getIdFromMessage(message);
         Tamagotchi tamagotchi = tamagotchiService.putTamagotchiToSleep(id);
         LoggerUtil.logTrace("tamagothi sleeping");
+
+        return tamagotchi;
+    }
+
+    private Tamagotchi handleAwakeAction(Message message) throws RequestException, TamagotchiNotFoundException {
+        int id = getIdFromMessage(message);
+        Tamagotchi tamagotchi = tamagotchiService.awakeTamagotchi(id);
+        LoggerUtil.logTrace("tamagothi playing");
 
         return tamagotchi;
     }
