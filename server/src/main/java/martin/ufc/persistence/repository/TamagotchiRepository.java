@@ -51,7 +51,7 @@ public class TamagotchiRepository {
                 "SET isSleeping = ?, " +
                 "food = ?, " +
                 "happy = ?, " +
-                "energy = ? " +
+                "energy = ?, " +
                 "startedSleeping = ? " +
                 "WHERE id = ?";
 

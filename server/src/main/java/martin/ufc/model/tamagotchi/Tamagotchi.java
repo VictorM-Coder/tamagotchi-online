@@ -35,6 +35,7 @@ public class Tamagotchi implements JSONfier {
     @Override
     public String toJSON() {
         return "{"
+                + "\"id\": \"" + id + "\","
                 + "\"name\": \"" + name + "\","
                 + "\"ageInDays\": " + getAgeInDays() + ","
                 + "\"isSleeping\": " + isSleeping + ","
