@@ -1,6 +1,5 @@
 package martin.ufc.server.infra.request.handlers;
 
-import martin.ufc.model.tamagotchi.TamagotchiKeeper;
 import martin.ufc.server.infra.response.Response;
 import martin.ufc.util.LoggerUtil;
 
@@ -11,9 +10,9 @@ public class ClientHandler {
     private Socket client;
     private RequestMessageHandler requestMessageHandler;
 
-    public ClientHandler(Socket client, TamagotchiKeeper tamagotchiKeeper) {
+    public ClientHandler(Socket client) {
         this.client = client;
-        this.requestMessageHandler = new RequestMessageHandler(tamagotchiKeeper);
+        this.requestMessageHandler = new RequestMessageHandler();
     }
 
     public void communicateWithClient() {
