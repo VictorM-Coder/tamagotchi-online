@@ -46,6 +46,17 @@ tamagotchiScreen.addEventListener("putTamagochiToSleepEvent", async () => {
     }
 })
 
+tamagotchiScreen.addEventListener("awakeTamagotchiEvent", async () => {
+    const user = LocalstorageUtils.getUser()
+    const response = await tamagotchiService.awakeTamagotchi(user.username, user.id)
+
+    if (response) {
+        tamagotchiScreen.tamagotchi = response
+    } else {
+        window.alert("Failed awakening Tamagotchi")
+    }
+})
+
 tamagotchiScreen.addEventListener("playWithTamagotchi", async () => {
     const user = LocalstorageUtils.getUser()
     const response = await tamagotchiService.playWithTamagotchi(user.username, user.id)

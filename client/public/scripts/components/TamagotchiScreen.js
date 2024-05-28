@@ -19,7 +19,13 @@ class TamagotchiScreenComponent extends HTMLElement {
 
             if (!this.isWaiting) {
                 this.enableActions()
-                imgCat.src = (!this.tamagotchi.isSleeping)? "assets/cat-sprites/cat-default.gif": "assets/cat-sprites/sleeping-cat.gif"
+                if (!this.tamagotchi.isSleeping) {
+                    imgCat.src = "assets/cat-sprites/cat-default.gif"
+                    this.offSleepMode()
+                } else {
+                    imgCat.src = "assets/cat-sprites/sleeping-cat.gif"
+                    this.onSleepMode()
+                }
             }
         }
     }
@@ -85,10 +91,18 @@ class TamagotchiScreenComponent extends HTMLElement {
 
         //EVENTS
         btnSleep.addEventListener("click", () => {
-            const putTamagochiToSleepEvent = new CustomEvent("putTamagochiToSleepEvent", {
-                bubbles: true,
-            })
-            this.dispatchEvent(putTamagochiToSleepEvent)
+            if (this.tamagotchi.isSleeping) {
+                const awakeTamagotchiEvent = new CustomEvent("awakeTamagotchiEvent", {
+                    bubbles: true,
+                })
+                this.dispatchEvent(awakeTamagotchiEvent)
+
+            } else {
+                const putTamagochiToSleepEvent = new CustomEvent("putTamagochiToSleepEvent", {
+                    bubbles: true,
+                })
+                this.dispatchEvent(putTamagochiToSleepEvent)
+            }
         })
 
         btnFeed.addEventListener("click", () => {
@@ -134,6 +148,27 @@ class TamagotchiScreenComponent extends HTMLElement {
         btnPlay.disabled = true
         btnFeed.disabled = true
         btnSleep.disabled = true
+    }
+
+    onSleepMode() {
+        const btnFeed = document.getElementById("btn-feed")
+        const btnPlay = document.getElementById("btn-play")
+        const btnSleep = document.getElementById("btn-sleep")
+
+        btnPlay.disabled = true
+        btnFeed.disabled = true
+        btnSleep.innerText = "Awake"
+    }
+
+    offSleepMode() {
+        const btnFeed = document.getElementById("btn-feed")
+        const btnPlay = document.getElementById("btn-play")
+        const btnSleep = document.getElementById("btn-sleep")
+
+        btnPlay.disabled = false
+        btnFeed.disabled = false
+        btnSleep.disabled = false
+        btnSleep.innerText = "Sleep"
     }
 
     enableActions() {
