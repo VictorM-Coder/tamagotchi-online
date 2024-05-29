@@ -1,6 +1,6 @@
 package martin.ufc.server;
 
-import martin.ufc.server.infra.request.handlers.ClientHandler;
+import martin.ufc.server.infra.handlers.ClientHandler;
 import martin.ufc.util.LoggerUtil;
 
 import java.io.IOException;

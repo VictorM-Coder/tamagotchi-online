@@ -1,7 +1,7 @@
 package martin.ufc.model.history;
 
 import martin.ufc.model.JSONfier;
-import martin.ufc.server.infra.request.message.ActionType;
+import martin.ufc.server.infra.request.ActionType;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

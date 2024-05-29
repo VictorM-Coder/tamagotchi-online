@@ -5,7 +5,7 @@ import martin.ufc.exception.SQLiteException;
 import martin.ufc.model.history.History;
 import martin.ufc.model.history.HistoryAction;
 import martin.ufc.persistence.repository.HistoryActionsRepository;
-import martin.ufc.server.infra.request.message.ActionType;
+import martin.ufc.server.infra.request.ActionType;
 
 public class HistoryActionService {
     public HistoryAction createHistoryAction(String username, ActionType actionType, int tamagotchiId) throws InternalException {

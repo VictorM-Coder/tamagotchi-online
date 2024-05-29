@@ -1,7 +1,7 @@
-package martin.ufc.server.infra.request.handlers;
+package martin.ufc.server.infra.handlers;
 
 import martin.ufc.exception.*;
-import martin.ufc.server.infra.request.message.RequestMessage;
+import martin.ufc.server.infra.request.RequestMessage;
 import martin.ufc.server.infra.response.Response;
 import martin.ufc.server.infra.response.body.ResponseBody;
 import martin.ufc.util.LoggerUtil;
