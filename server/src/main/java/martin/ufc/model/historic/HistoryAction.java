@@ -1,15 +1,30 @@
-package martin.ufc.model;
+package martin.ufc.model.historic;
 
+import martin.ufc.model.JSONfier;
 import martin.ufc.server.infra.request.message.ActionType;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-public class HistoryAction {
+public class HistoryAction implements JSONfier {
     private int id;
     private String username;
     private int tamagotchiId;
     private ActionType action;
     private LocalDateTime dateTime;
+
+    @Override
+    public String toJSON() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        String dateTimeString = dateTime.format(formatter);
+        return "{" +
+                "\"id\":" + id + "," +
+                "\"username\":\"" + username + "\"," +
+                "\"tamagotchiId\":" + tamagotchiId + "," +
+                "\"action\":\"" + action + "\"," +
+                "\"dateTime\":\"" + dateTimeString + "\"" +
+                "}";
+    }
 
     public void setId(int id) {
         this.id = id;

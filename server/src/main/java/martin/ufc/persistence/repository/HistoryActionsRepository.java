@@ -1,7 +1,8 @@
 package martin.ufc.persistence.repository;
 
 import martin.ufc.exception.SQLiteException;
-import martin.ufc.model.HistoryAction;
+import martin.ufc.model.historic.History;
+import martin.ufc.model.historic.HistoryAction;
 import martin.ufc.persistence.database.SQLiteStatement;
 import martin.ufc.server.infra.request.message.ActionType;
 
@@ -30,10 +31,10 @@ public class HistoryActionsRepository {
         return id;
     }
 
-    public static List<HistoryAction> getHistoryActionsForATamagotchi(int tamagotchiId) throws SQLiteException {
+    public static History getHistoryActionsForATamagotchi(int tamagotchiId) throws SQLiteException {
         String sql = "SELECT * FROM history_action_tb WHERE tamagotchi_id = ?";
         SQLiteStatement statement = new SQLiteStatement(sql);
-        List<HistoryAction> historyActions = new ArrayList<>();
+        History historyActions = new History();
 
         ResultSet resultSet = statement.setInt(tamagotchiId).executeQuery();
 
