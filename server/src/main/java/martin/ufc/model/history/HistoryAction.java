@@ -1,4 +1,4 @@
-package martin.ufc.model.historic;
+package martin.ufc.model.history;
 
 import martin.ufc.model.JSONfier;
 import martin.ufc.server.infra.request.message.ActionType;

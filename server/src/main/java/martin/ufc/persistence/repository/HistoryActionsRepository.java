@@ -1,16 +1,14 @@
 package martin.ufc.persistence.repository;
 
 import martin.ufc.exception.SQLiteException;
-import martin.ufc.model.historic.History;
-import martin.ufc.model.historic.HistoryAction;
+import martin.ufc.model.history.History;
+import martin.ufc.model.history.HistoryAction;
 import martin.ufc.persistence.database.SQLiteStatement;
 import martin.ufc.server.infra.request.message.ActionType;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 public class HistoryActionsRepository {
     private HistoryActionsRepository() {}

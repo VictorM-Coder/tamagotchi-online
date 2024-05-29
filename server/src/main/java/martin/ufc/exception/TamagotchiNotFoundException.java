@@ -1,8 +1,8 @@
 package martin.ufc.exception;
 
-import martin.ufc.model.JSONfier;
+import martin.ufc.server.infra.response.body.ResponseBody;
 
-public class TamagotchiNotFoundException extends Exception implements JSONfier {
+public class TamagotchiNotFoundException extends Exception implements ResponseBody {
     public TamagotchiNotFoundException(String message) {
         super(message);
     }

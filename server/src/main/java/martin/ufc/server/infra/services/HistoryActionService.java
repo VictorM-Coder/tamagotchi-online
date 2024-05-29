@@ -2,8 +2,8 @@ package martin.ufc.server.infra.services;
 
 import martin.ufc.exception.InternalException;
 import martin.ufc.exception.SQLiteException;
-import martin.ufc.model.historic.History;
-import martin.ufc.model.historic.HistoryAction;
+import martin.ufc.model.history.History;
+import martin.ufc.model.history.HistoryAction;
 import martin.ufc.persistence.repository.HistoryActionsRepository;
 import martin.ufc.server.infra.request.message.ActionType;
 

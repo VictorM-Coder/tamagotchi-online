@@ -1,8 +1,8 @@
 package martin.ufc.exception;
 
-import martin.ufc.model.JSONfier;
+import martin.ufc.server.infra.response.body.ResponseBody;
 
-public class InternalException extends Exception implements JSONfier {
+public class InternalException extends Exception implements ResponseBody {
     public InternalException(String message) {
         super(message);
     }

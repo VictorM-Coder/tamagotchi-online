@@ -1,33 +1,34 @@
 package martin.ufc.server.infra.response;
 
 import martin.ufc.model.JSONfier;
+import martin.ufc.server.infra.response.body.ResponseBody;
 
 public class Response implements JSONfier{
     private final ResponseStatus status;
-    private final JSONfier body;
+    private final ResponseBody responseBody;
 
-    private Response(ResponseStatus status, JSONfier body) {
+    private Response(ResponseStatus status, ResponseBody responseBody) {
         this.status = status;
-        this.body = body;
+        this.responseBody = responseBody;
     }
 
     @Override
     public String toJSON() {
         return "{"
                 + "\"status\": \"" + status + "\","
-                + "\"body\": " + body.toJSON()
+                + "\"body\": " + responseBody.toJSON()
                 + "}";
     }
 
-    public static Response createSuccessResponse(JSONfier body) {
-        return new Response(ResponseStatus.SUCCESS, body);
+    public static Response createSuccessResponse(ResponseBody responseBody) {
+        return new Response(ResponseStatus.SUCCESS, responseBody);
     }
 
-    public static Response createFailResponse(JSONfier body) {
-        return new Response(ResponseStatus.FAIL, body);
+    public static Response createFailResponse(ResponseBody responseBody) {
+        return new Response(ResponseStatus.FAIL, responseBody);
     }
 
-    public static Response createErrorResponse(JSONfier body) {
-        return new Response(ResponseStatus.ERROR, body);
+    public static Response createErrorResponse(ResponseBody responseBody) {
+        return new Response(ResponseStatus.ERROR, responseBody);
     }
 }
