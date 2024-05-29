@@ -45,4 +45,12 @@ router.put('/awake', async (req, res) => {
     res.send(response)
 });
 
+router.get('/get', async (req, res) => {
+    const username = req.query.username
+    const id = req.query.id
+
+    const response = await service.getTamagotchi(username, id)
+    res.send(response)
+});
+
 module.exports = router

@@ -27,6 +27,11 @@ class TamagotchiService {
         return await this.repository.communicateWithServer(request)
     }
 
+    async getTamagotchi(username, id)  {
+        const request = TamagotchiService.#buildRequest(username, "GET", id)
+        return await this.repository.communicateWithServer(request)
+    }
+
     static #buildRequest(name, action, body) {
         if (body){
             return `${name} ${action} ${body}\n`

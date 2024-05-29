@@ -5,14 +5,26 @@ const tamagotchiService = new TamagotchiService()
 
 document.body.appendChild(loginScreen)
 
+//Handle LoginScreen events
 loginScreen.addEventListener("signInEvent", () => {
     goToSignInScreen()
 })
 
-loginScreen.addEventListener("connectEvent", () => {
-    goToTamagotchiScreen()
+loginScreen.addEventListener("connectEvent", async (ev) => {
+    const username = ev.detail.username
+    const id = ev.detail.id
+
+    const response = await tamagotchiService.getTamagotchi(username, id)
+    if (response) {
+        tamagotchiScreen.tamagotchi = response
+        LocalstorageUtils.setUserAndId(username, id)
+        goToTamagotchiScreen()
+    } else {
+        window.alert("Failed to connect to the Tamagotchi")
+    }
 })
 
+//Handle SignInScreen events
 signInScreen.addEventListener("tamagotchiSubmited", async (ev) => {
     const response = await tamagotchiService.createTamagotchi(ev.detail.username, ev.detail.tamagotchiName)
     if (response) {
@@ -24,6 +36,7 @@ signInScreen.addEventListener("tamagotchiSubmited", async (ev) => {
     }
 })
 
+//Handle TamagotchiScreen events
 tamagotchiScreen.addEventListener("feedTamagotchi", async () => {
     const user = LocalstorageUtils.getUser()
     const response = await tamagotchiService.feedTamagotchi(user.username, user.id)

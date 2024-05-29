@@ -19,6 +19,11 @@ class TamagotchiService {
         return this.#sendRequest("/api/awake", "PUT", { username, id });
     }
 
+    async getTamagotchi(username, id) {
+        const params = new URLSearchParams({ username, id });
+        return this.#sendRequest(`/api/get?${params.toString()}`, "GET");
+    }
+
     async #sendRequest(url, method, body) {
         try {
             const response = await fetch(url, {
@@ -26,7 +31,7 @@ class TamagotchiService {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(body)
+                body: (method !== "GET") ? JSON.stringify(body): null
             });
 
             const data = await response.text();

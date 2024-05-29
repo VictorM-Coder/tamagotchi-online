@@ -10,13 +10,13 @@ class LoginScreenComponent extends HTMLElement {
                 <form class="form-login mt-4">
                     <div class="form-internal">
                         <div class="mb-3">
-                            <label for="inputOwner" class="d-block">Who are you?</label>
-                            <input id="inputOwner" type="text" class="input-tamagotchi d-block mt-2 pixel-border">
+                            <label for="input-username" class="d-block">Who are you?</label>
+                            <input id="input-username" type="text" class="input-tamagotchi d-block mt-2 pixel-border">
                         </div>
             
                         <div class="mb-3">
-                            <label for="inputCatIp" class="d-block">Where is your pet?</label>
-                            <input id="inputCatIp" type="text" class="input-tamagotchi pixel-border d-block mt-2">
+                            <label for="input-id" class="d-block">Where is your pet?</label>
+                            <input id="input-id" type="number" min="1" class="input-tamagotchi pixel-border d-block mt-2">
                         </div>
                     </div>
                     <div class="action-bar-login">
@@ -29,11 +29,30 @@ class LoginScreenComponent extends HTMLElement {
 
         const buttonConnect = document.getElementById("button-connect")
         const buttonSignIn = document.getElementById("button-signin")
+        const inputUsername = document.getElementById("input-username")
+        const inputId = document.getElementById("input-id")
 
         buttonConnect.addEventListener("click", function (ev) {
             ev.preventDefault()
-            const connectEvent = new CustomEvent("connectEvent", { bubbles: true });
-            this.dispatchEvent(connectEvent);
+            const username = inputUsername.value
+            const id = inputId.value
+
+            if (username.length === 0) {
+                window.alert("Fill your name, please")
+            } else if (!id) {
+                window.alert("Fill id input with a valid value")
+            } else {
+                const connectEvent = new CustomEvent("connectEvent",
+                    {
+                        bubbles: true,
+                        detail: {
+                            username: username,
+                            id: id
+                        }
+                    }
+                );
+                this.dispatchEvent(connectEvent);
+            }
         })
 
         buttonSignIn.addEventListener("click", function (ev) {
