@@ -116,7 +116,7 @@ public class RequestMessageHandler {
         return tamagotchi;
     }
 
-    private Tamagotchi handleGetAction(RequestMessage requestMessage) throws RequestException, InternalException {
+    private Tamagotchi handleGetAction(RequestMessage requestMessage) throws RequestException, InternalException, TamagotchiNotFoundException {
         int id = getIdFromMessage(requestMessage);
         Tamagotchi tamagotchi = tamagotchiService.findTamagotchiById(id);
         historyActionService.createHistoryAction(requestMessage.getOwner(), requestMessage.getMessageType(), id);
