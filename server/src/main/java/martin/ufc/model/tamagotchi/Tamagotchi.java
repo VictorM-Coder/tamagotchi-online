@@ -127,4 +127,8 @@ public class Tamagotchi implements JSONfier {
     public LocalDateTime getStartedSleeping() {
         return startedSleeping;
     }
+
+    public int getId() {
+        return id;
+    }
 }

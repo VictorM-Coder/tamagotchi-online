@@ -1,6 +1,6 @@
 package martin.ufc.server.infra.request.message;
 
-public enum MessageType {
+public enum ActionType {
      EAT,
     SLEEP,
     AWAKE,

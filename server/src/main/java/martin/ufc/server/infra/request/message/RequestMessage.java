@@ -5,20 +5,20 @@ import martin.ufc.exception.InvalidMessageException;
 /**
  * MESSAGE FORMAT: OWNER ACTION BODY
  */
-public class Message {
+public class RequestMessage {
     private static final int OWNER_INDEX = 0;
     private static final int MESSAGE_TYPE_INDEX = 1;
     private static final int BODY_INDEX = 2;
-    private MessageType messageType;
+    private ActionType actionType;
     private String owner;
     private String body;
 
     @Override
     public String toString() {
-        return owner + " " + messageType + " " + body;
+        return owner + " " + actionType + " " + body;
     }
 
-    public Message(String message) throws InvalidMessageException {
+    public RequestMessage(String message) throws InvalidMessageException {
         String[] splitMessage;
         splitMessage = message.split(" ");
 
@@ -36,7 +36,7 @@ public class Message {
         owner = splitMessage[OWNER_INDEX];
 
         try {
-            messageType = MessageType.valueOf(splitMessage[MESSAGE_TYPE_INDEX]);
+            actionType = ActionType.valueOf(splitMessage[MESSAGE_TYPE_INDEX]);
         } catch (IllegalArgumentException illegalArgumentException) {
             throw new InvalidMessageException("Invalid MessageType");
         }
@@ -48,8 +48,8 @@ public class Message {
         }
     }
 
-    public MessageType getMessageType() {
-        return messageType;
+    public ActionType getMessageType() {
+        return actionType;
     }
 
     public String getOwner() {
