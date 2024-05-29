@@ -19,48 +19,48 @@ public class TamagotchiService {
         }
     }
 
-    public Tamagotchi feedTamagotchi(int id) throws RequestException, TamagotchiNotFoundException {
+    public Tamagotchi feedTamagotchi(int id) throws TamagotchiNotFoundException, InternalException {
         final var tamagotchi = findTamagotchiById(id);
         tamagotchi.eat();
 
         return updateTamagotchi(id, tamagotchi);
     }
 
-    public Tamagotchi putTamagotchiToSleep(int id) throws RequestException, TamagotchiNotFoundException {
+    public Tamagotchi putTamagotchiToSleep(int id) throws TamagotchiNotFoundException, InternalException {
         final var tamagotchi = findTamagotchiById(id);
         tamagotchi.sleep();
 
         return updateTamagotchi(id, tamagotchi);
     }
 
-    public Tamagotchi awakeTamagotchi(int id) throws RequestException, TamagotchiNotFoundException {
+    public Tamagotchi awakeTamagotchi(int id) throws TamagotchiNotFoundException, InternalException {
         final var tamagotchi = findTamagotchiById(id);
         tamagotchi.awake();
 
         return updateTamagotchi(id, tamagotchi);
     }
 
-    public Tamagotchi playWithTamagotchi(int id) throws RequestException, TamagotchiNotFoundException {
+    public Tamagotchi playWithTamagotchi(int id) throws TamagotchiNotFoundException, InternalException {
         final var tamagotchi = findTamagotchiById(id);
         tamagotchi.play();
 
         return updateTamagotchi(id, tamagotchi);
     }
 
-    public Tamagotchi findTamagotchiById(int id) throws RequestException {
+    public Tamagotchi findTamagotchiById(int id) throws TamagotchiNotFoundException {
         try {
             return TamagotchiRepository.findById(id);
         } catch (SQLiteException e) {
-            throw new RequestException("Id not exists");
+            throw new TamagotchiNotFoundException("this tamagotchi not exists");
         }
     }
 
-    private Tamagotchi updateTamagotchi(int id, Tamagotchi tamagotchi) throws TamagotchiNotFoundException {
+    private Tamagotchi updateTamagotchi(int id, Tamagotchi tamagotchi) throws InternalException {
         try {
             TamagotchiRepository.update(id, tamagotchi);
             return tamagotchi;
         } catch (SQLiteException e) {
-            throw new TamagotchiNotFoundException(e.getMessage());
+            throw new InternalException(e.getMessage());
         }
     }
 }
