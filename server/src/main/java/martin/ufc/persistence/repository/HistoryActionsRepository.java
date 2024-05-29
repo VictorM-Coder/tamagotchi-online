@@ -15,14 +15,15 @@ public class HistoryActionsRepository {
     private HistoryActionsRepository() {}
 
     public static int add(HistoryAction historyAction) throws SQLiteException {
-        String sql = "INSERT INTO history_action_tb(username, tamagotchi_id, action)" +
-                "values(?, ?, ?)";
+        String sql = "INSERT INTO history_action_tb(username, tamagotchi_id, action, date_time)" +
+                "values(?, ?, ?, ?)";
 
         SQLiteStatement statement = new SQLiteStatement(sql);
         int id = statement
                 .setString(historyAction.getUsername())
                 .setInt(historyAction.getTamagotchiId())
                 .setString(historyAction.getAction().toString())
+                .setString(historyAction.getDateTime().toString())
                 .executeInsert();
 
         statement.close();

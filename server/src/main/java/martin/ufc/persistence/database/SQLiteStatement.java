@@ -20,7 +20,7 @@ public class SQLiteStatement {
             preparedStatement.setString(indexValue, value);
             indexValue++;
         } catch (SQLException e) {
-            throw new SQLiteException("Fail while setting value for a statement");
+            throw new SQLiteException("Fail while setting string value for a statement");
         }
 
         return this;
@@ -31,7 +31,7 @@ public class SQLiteStatement {
             preparedStatement.setInt(indexValue, value);
             indexValue++;
         } catch (SQLException e) {
-            throw new SQLiteException("Fail while setting value for a statement");
+            throw new SQLiteException("Fail while setting int value for a statement");
         }
 
         return this;
@@ -42,7 +42,7 @@ public class SQLiteStatement {
             preparedStatement.execute();
             return preparedStatement.getGeneratedKeys().getInt(1);
         } catch (SQLException e) {
-            throw new SQLiteException("Fail while setting value for a statement");
+            throw new SQLiteException("Fail while executing insert in a statement");
         }
     }
 
@@ -50,7 +50,7 @@ public class SQLiteStatement {
         try {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new SQLiteException("Fail while setting value for a statement");
+            throw new SQLiteException("Fail while executing update in a statement");
         }
     }
 

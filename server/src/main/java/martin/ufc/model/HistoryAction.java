@@ -40,4 +40,8 @@ public class HistoryAction {
     public ActionType getAction() {
         return action;
     }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
 }
