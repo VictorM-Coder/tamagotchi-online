@@ -14,7 +14,7 @@ public class TamagotchiWithFullHistoryResponseBody implements ResponseBody {
 
     @Override
     public String toJSON() {
-        return "\"tamagotchi\": " + tamagotchi.toJSON() + "," +
-                "\"history\": " + history.toJSON();
+        return "{ \"tamagotchi\": " + tamagotchi.toJSON() + "," +
+                history.toJSON() + "}";
     }
 }

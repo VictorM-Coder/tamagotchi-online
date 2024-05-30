@@ -87,10 +87,8 @@ public class ActionsHandler {
 
     private int getIdFromMessage(RequestMessage requestMessage) throws RequestException {
         try {
-            System.out.println(requestMessage.getBody());
             return Integer.parseInt(requestMessage.getBody());
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RequestException("Invalid id");
         }
     }
