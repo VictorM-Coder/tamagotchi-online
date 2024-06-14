@@ -15,6 +15,7 @@ public class TamagotchiService {
             tamagotchi.setId(id);
             return tamagotchi;
         } catch (SQLiteException e) {
+            e.printStackTrace();
             throw new InternalException("Error while creating the tamagotchi");
         }
     }

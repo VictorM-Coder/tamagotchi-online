@@ -5,8 +5,8 @@ import martin.ufc.exception.SQLiteException;
 import java.sql.*;
 
 public class SQLiteConnection {
-    private Connection connection;
-    private static SQLiteConnection INSTANCE;
+    private final Connection connection;
+    private static SQLiteConnection instance;
     private static final String URL = "jdbc:sqlite:tamagotchi.db";
 
     private SQLiteConnection() throws SQLiteException {
@@ -18,10 +18,10 @@ public class SQLiteConnection {
     }
 
     public static SQLiteConnection getInstance() throws SQLiteException {
-        if (INSTANCE == null) {
-            INSTANCE = new SQLiteConnection();
+        if (instance == null) {
+            instance = new SQLiteConnection();
         }
-        return INSTANCE;
+        return instance;
     }
 
     public void closeConnection() throws SQLiteException {
@@ -31,14 +31,6 @@ public class SQLiteConnection {
             }
         } catch (SQLException exception) {
             throw new SQLiteException("Fail while disconnecting to SQLite database");
-        }
-    }
-
-    public Statement createStatement() throws SQLiteException {
-        try {
-            return connection.createStatement();
-        } catch (SQLException e) {
-            throw new SQLiteException("Fail while creating statement with SQLite database");
         }
     }
 

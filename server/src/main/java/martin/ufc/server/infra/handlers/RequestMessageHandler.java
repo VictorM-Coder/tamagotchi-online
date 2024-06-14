@@ -25,11 +25,6 @@ public class RequestMessageHandler {
             var errorRequest = new RequestException(invalidMessageException.getMessage());
             response = Response.createErrorResponse(errorRequest);
 
-        } catch (TamagotchiNotCreatedException tamagotchiNotCreatedException) {
-            LoggerUtil.logError(tamagotchiNotCreatedException.getMessage());
-            var failRequest = new RequestException(tamagotchiNotCreatedException.getMessage());
-            response = Response.createFailResponse(failRequest);
-
         } catch (RequestException requestException) {
             response = Response.createErrorResponse(requestException);
 
@@ -40,7 +35,7 @@ public class RequestMessageHandler {
         return response;
     }
 
-    private ResponseBody executeAction(RequestMessage requestMessage) throws TamagotchiNotCreatedException, TamagotchiNotFoundException, RequestException, InternalException {
+    private ResponseBody executeAction(RequestMessage requestMessage) throws TamagotchiNotFoundException, RequestException, InternalException {
         return switch (requestMessage.getMessageType()) {
             case EAT -> actionsHandler.handleEatAction(requestMessage);
             case SLEEP -> actionsHandler.handleSleepAction(requestMessage);
@@ -48,10 +43,6 @@ public class RequestMessageHandler {
             case PLAY -> actionsHandler.handlePlayAction(requestMessage);
             case NAME -> actionsHandler.handleNameAction(requestMessage);
             case GET -> actionsHandler.handleGetAction(requestMessage);
-            default -> {
-                LoggerUtil.logError("Unknown Action");
-                throw new RequestException("Unknown Action");
-            }
         };
     }
 }

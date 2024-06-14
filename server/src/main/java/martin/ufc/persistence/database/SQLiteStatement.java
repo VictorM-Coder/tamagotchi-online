@@ -7,11 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class SQLiteStatement {
-    private PreparedStatement preparedStatement;
+    private final PreparedStatement preparedStatement;
     private int indexValue = 1;
+    private final SQLiteConnection connection;
 
     public SQLiteStatement(String sql) throws SQLiteException {
-        SQLiteConnection connection = SQLiteConnection.getInstance();
+        connection = SQLiteConnection.getInstance();
         preparedStatement = connection.preparedStatement(sql);
     }
 

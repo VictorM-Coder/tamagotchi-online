@@ -14,15 +14,15 @@ public class History implements JSONfier {
 
     @Override
     public String toJSON() {
-        String json = "\"history\": [";
+        StringBuilder json = new StringBuilder("\"history\": [");
         for (int cont = 0; cont < historyActions.size(); cont++) {
-            json += historyActions.get(cont).toJSON();
+            json.append(historyActions.get(cont).toJSON());
             if (cont < historyActions.size()-1) {
-                json += ",";
+                json.append(",");
             }
         }
-        json += "]";
-        return json;
+        json.append("]");
+        return json.toString();
     }
 
     public void add(HistoryAction historyAction) {

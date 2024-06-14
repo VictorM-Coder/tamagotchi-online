@@ -7,8 +7,8 @@ import java.io.*;
 import java.net.Socket;
 
 public class ClientHandler {
-    private Socket client;
-    private RequestMessageHandler requestMessageHandler;
+    private final Socket client;
+    private final RequestMessageHandler requestMessageHandler;
 
     public ClientHandler(Socket client) {
         this.client = client;
@@ -18,7 +18,7 @@ public class ClientHandler {
     public void communicateWithClient() {
         try (
                 DataInputStream dataInput = new DataInputStream(client.getInputStream());
-                OutputStream dataOutput = client.getOutputStream();
+                OutputStream dataOutput = client.getOutputStream()
         ) {
             String request = readInputStream(dataInput);
             Response response = requestMessageHandler.handleClientMessage(request);
