@@ -149,4 +149,6 @@ progress::-webkit-progress-value {
 .chat-message {
     font-size: 0.8em;
     margin-top: 20px;
+    text-align: justify;
+    line-height: 1.8em;
 }
