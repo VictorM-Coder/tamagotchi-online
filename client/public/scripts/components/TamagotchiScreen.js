@@ -2,6 +2,7 @@ class TamagotchiScreenComponent extends HTMLElement {
     constructor() {
         super();
         this._tamagotchi = null
+        this._history = []
     }
     isWaiting = false
 
@@ -28,6 +29,15 @@ class TamagotchiScreenComponent extends HTMLElement {
                 }
             }
         }
+    }
+
+    initializeChat() {
+        const chat = document.getElementById("div-chat")
+        this.history.forEach(action => {
+            const chatAction = document.createElement("chat-action")
+            chatAction.chatAction = action
+            chat.appendChild(chatAction)
+        })
     }
 
     connectedCallback() {
@@ -57,8 +67,8 @@ class TamagotchiScreenComponent extends HTMLElement {
                         </div>
                     </div>
                     <div class="cat-actions">
-                        <div class="chat pixel-border mb-2">
-                            Chat
+                        <div id="div-chat" class="chat pixel-border mb-2">
+                            
                         </div>
                         <div class="action-bar">
                             <button id="btn-feed" class="mt-2">
@@ -88,6 +98,7 @@ class TamagotchiScreenComponent extends HTMLElement {
 
         header.innerText = `${this.tamagotchi.name} - ${this.tamagotchi.ageInDays} Days`
         this.updateData()
+        this.initializeChat()
 
         //EVENTS
         btnSleep.addEventListener("click", () => {
@@ -190,6 +201,16 @@ class TamagotchiScreenComponent extends HTMLElement {
 
     get tamagotchi() {
         return this._tamagotchi;
+    }
+
+    set history(value) {
+        if (value) {
+            this._history = value
+        }
+    }
+
+    get history() {
+        return this._history
     }
 }
 

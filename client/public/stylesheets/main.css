@@ -98,6 +98,8 @@ button, .pixel-border {
 
 .chat {
     height: 280px;
+    padding: 8px;
+    overflow-y: auto;
 }
 
 .status {
@@ -142,4 +144,9 @@ progress::-webkit-progress-bar {
 
 progress::-webkit-progress-value {
     background-color: var(--green-1);
+}
+
+.chat-message {
+    font-size: 0.8em;
+    margin-top: 20px;
 }

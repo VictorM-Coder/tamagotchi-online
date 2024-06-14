@@ -49,3 +49,22 @@ button:disabled {
     opacity: 80%;
     scale: 0.95;
 }
+
+* {
+    scrollbar-width: auto;
+    scrollbar-color: var(--green-4) var(--green-0);
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+    background: var(--green-0);
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: var(--green-4);
+    border: 3px solid var(--green-0);
+}

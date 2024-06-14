@@ -8,8 +8,8 @@ loginScreen.addEventListener("connectEvent", async (ev) => {
 
     const response = await tamagotchiService.getTamagotchi(username, id)
     if (response) {
-        console.log(response)
         tamagotchiScreen.tamagotchi = response.tamagotchi
+        tamagotchiScreen.history = response.history
         LocalstorageUtils.setUserAndId(username, id)
         goToTamagotchiScreen()
     } else {
