@@ -45,5 +45,5 @@ tamagotchiScreen.addEventListener("playWithTamagotchi", async () => {
 
 function handleResponse(response) {
     tamagotchiScreen.tamagotchi = response.tamagotchi
-    tamagotchiScreen.history.push(response.historyAction)
+    tamagotchiScreen.updateChat(response.historyAction)
 }

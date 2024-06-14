@@ -38,6 +38,21 @@ class TamagotchiScreenComponent extends HTMLElement {
             chatAction.chatAction = action
             chat.appendChild(chatAction)
         })
+        this.scrollChatToBottom()
+    }
+
+    updateChat(action) {
+        const chat = document.getElementById("div-chat")
+        const chatAction = document.createElement("chat-action")
+        chatAction.chatAction = action
+        this.history.push(action)
+        chat.appendChild(chatAction)
+        this.scrollChatToBottom()
+    }
+
+    scrollChatToBottom() {
+        const chat = document.getElementById("div-chat");
+        chat.lastElementChild.scrollIntoView();
     }
 
     connectedCallback() {
