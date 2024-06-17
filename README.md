@@ -31,5 +31,5 @@ O projeto **Tamagotchi Online** foi desenvolvido como parte da disciplina de Red
 ## 📬 Contato
 
 - Nome: Victor Martins Vieira
-- LinkedIn: [Seu LinkedIn](https://www.linkedin.com/in/victor-martins-230864233/)
-- GitHub: [Seu GitHub](https://github.com/VictorM-Coder)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/victor-martins-230864233/)
+- GitHub: [GitHub](https://github.com/VictorM-Coder)
