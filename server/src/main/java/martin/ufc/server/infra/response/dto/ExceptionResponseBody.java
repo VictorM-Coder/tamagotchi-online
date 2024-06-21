@@ -1,4 +1,4 @@
-package martin.ufc.server.infra.response.body;
+package martin.ufc.server.infra.response.dto;
 
 import martin.ufc.model.JSONfier;
 

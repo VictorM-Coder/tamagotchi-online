@@ -1,9 +1,8 @@
 package martin.ufc.server.infra.services;
 
 import martin.ufc.exception.InternalException;
-import martin.ufc.exception.RequestException;
-import martin.ufc.exception.TamagotchiNotFoundException;
 import martin.ufc.exception.SQLiteException;
+import martin.ufc.exception.TamagotchiNotFoundException;
 import martin.ufc.model.tamagotchi.Tamagotchi;
 import martin.ufc.persistence.repository.TamagotchiRepository;
 
@@ -15,7 +14,6 @@ public class TamagotchiService {
             tamagotchi.setId(id);
             return tamagotchi;
         } catch (SQLiteException e) {
-            e.printStackTrace();
             throw new InternalException("Error while creating the tamagotchi");
         }
     }

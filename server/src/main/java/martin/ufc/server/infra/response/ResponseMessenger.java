@@ -1,5 +1,6 @@
 package martin.ufc.server.infra.response;
 
+import martin.ufc.server.infra.response.dto.Response;
 import martin.ufc.util.LoggerUtil;
 
 import java.io.IOException;

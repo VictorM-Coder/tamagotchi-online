@@ -1,15 +1,14 @@
 package martin.ufc.server.infra.handlers;
 
 import martin.ufc.exception.InternalException;
-import martin.ufc.exception.RequestException;
 import martin.ufc.exception.TamagotchiNotFoundException;
 import martin.ufc.model.history.HistoryAction;
 import martin.ufc.model.tamagotchi.Tamagotchi;
 import martin.ufc.server.infra.request.ActionRequest;
 import martin.ufc.server.infra.request.ActionType;
 import martin.ufc.server.infra.request.ConnectionRequest;
-import martin.ufc.server.infra.response.body.TamagotchiWithFullHistoryResponseBody;
-import martin.ufc.server.infra.response.body.TamagotchiResponseBody;
+import martin.ufc.server.infra.response.dto.TamagotchiWithFullHistoryResponseBody;
+import martin.ufc.server.infra.response.dto.TamagotchiResponseBody;
 import martin.ufc.server.infra.services.HistoryActionService;
 import martin.ufc.server.infra.services.TamagotchiService;
 import martin.ufc.util.LoggerUtil;

@@ -1,4 +1,4 @@
-package martin.ufc.server.infra.response;
+package martin.ufc.server.infra.response.dto;
 
 public enum ResponseStatus {
     /**

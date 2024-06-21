@@ -6,9 +6,9 @@ import martin.ufc.exception.TamagotchiNotFoundException;
 import martin.ufc.server.infra.request.ActionRequest;
 import martin.ufc.server.infra.request.ConnectionRequest;
 import martin.ufc.server.infra.request.RequestFactory;
-import martin.ufc.server.infra.response.Response;
+import martin.ufc.server.infra.response.dto.Response;
 import martin.ufc.server.infra.response.ResponseMessenger;
-import martin.ufc.server.infra.response.body.ResponseBody;
+import martin.ufc.server.infra.response.dto.ResponseBody;
 import martin.ufc.util.LoggerUtil;
 
 import java.io.DataInputStream;
@@ -22,6 +22,7 @@ public class ActionRequestsHandler implements Runnable {
     private ActionsHandler actionsHandler;
     private final Socket client;
     private boolean connectionOn;
+    private String ownerConnected;
 
 
     public ActionRequestsHandler(Socket client) {
@@ -80,6 +81,7 @@ public class ActionRequestsHandler implements Runnable {
             client.close();
             dataInputStream.close();
             outputStream.close();
+            LoggerUtil.logTrace(ownerConnected + " left");
         } catch (IOException e) {
             LoggerUtil.logError("Error while closing the client");
         }
@@ -100,7 +102,8 @@ public class ActionRequestsHandler implements Runnable {
             ConnectionRequest connectionRequest = RequestFactory.createConnectionRequest(dataInputStream);
             actionsHandler = new ActionsHandler(connectionRequest);
             connectionOn = true;
-            LoggerUtil.logTrace(connectionRequest.getOwner() + " entered");
+            ownerConnected = connectionRequest.getOwner();
+            LoggerUtil.logTrace(ownerConnected + " entered");
         } catch (RequestException requestException) {
             Response response = Response.createFailResponse(requestException);
             ResponseMessenger.sendResponse(outputStream, response);

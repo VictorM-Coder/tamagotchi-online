@@ -1,8 +1,6 @@
-package martin.ufc.server.infra.response;
+package martin.ufc.server.infra.response.dto;
 
 import martin.ufc.model.JSONfier;
-import martin.ufc.server.infra.response.body.ExceptionResponseBody;
-import martin.ufc.server.infra.response.body.ResponseBody;
 
 public class Response implements JSONfier{
     private final ResponseStatus status;
