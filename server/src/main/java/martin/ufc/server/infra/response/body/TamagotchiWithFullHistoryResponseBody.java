@@ -4,8 +4,8 @@ import martin.ufc.model.history.History;
 import martin.ufc.model.tamagotchi.Tamagotchi;
 
 public class TamagotchiWithFullHistoryResponseBody implements ResponseBody {
-    private Tamagotchi tamagotchi;
-    private History history;
+    private final Tamagotchi tamagotchi;
+    private final History history;
 
     public TamagotchiWithFullHistoryResponseBody(Tamagotchi tamagotchi, History history) {
         this.tamagotchi = tamagotchi;

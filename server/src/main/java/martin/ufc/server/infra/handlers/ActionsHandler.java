@@ -5,95 +5,96 @@ import martin.ufc.exception.RequestException;
 import martin.ufc.exception.TamagotchiNotFoundException;
 import martin.ufc.model.history.HistoryAction;
 import martin.ufc.model.tamagotchi.Tamagotchi;
-import martin.ufc.server.infra.request.RequestMessage;
+import martin.ufc.server.infra.request.ActionRequest;
+import martin.ufc.server.infra.request.ActionType;
+import martin.ufc.server.infra.request.ConnectionRequest;
 import martin.ufc.server.infra.response.body.TamagotchiWithFullHistoryResponseBody;
 import martin.ufc.server.infra.response.body.TamagotchiResponseBody;
 import martin.ufc.server.infra.services.HistoryActionService;
 import martin.ufc.server.infra.services.TamagotchiService;
 import martin.ufc.util.LoggerUtil;
-
+//TODO remover logs e refatorar código
 public class ActionsHandler {
     private final TamagotchiService tamagotchiService;
     private final HistoryActionService historyActionService;
+    private final ConnectionRequest connectionRequest;
 
-    public ActionsHandler() {
+
+    public ActionsHandler(ConnectionRequest connectionRequest) {
+        this.connectionRequest = connectionRequest;
         tamagotchiService = new TamagotchiService();
         historyActionService = new HistoryActionService();
     }
 
-    public TamagotchiResponseBody handleEatAction(RequestMessage requestMessage) throws TamagotchiNotFoundException, RequestException, InternalException {
-        int id = getIdFromMessage(requestMessage);
+    public TamagotchiResponseBody handleEatAction(ActionRequest actionRequest) throws TamagotchiNotFoundException, InternalException {
+        int id = getIdFromMessage();
 
         Tamagotchi tamagotchi = tamagotchiService.feedTamagotchi(id);
-        HistoryAction historyAction = addHistoryAction(requestMessage, id);
+        HistoryAction historyAction = addHistoryAction(actionRequest.getMessageType());
         LoggerUtil.logTrace("tamagotchi eating");
 
         return new TamagotchiResponseBody(tamagotchi, historyAction);
     }
 
-    public TamagotchiResponseBody handleSleepAction(RequestMessage requestMessage) throws TamagotchiNotFoundException, RequestException, InternalException {
-        int id = getIdFromMessage(requestMessage);
+    public TamagotchiResponseBody handleSleepAction(ActionRequest actionRequest) throws TamagotchiNotFoundException, InternalException {
+        int id = getIdFromMessage();
 
         Tamagotchi tamagotchi = tamagotchiService.putTamagotchiToSleep(id);
-        HistoryAction historyAction = addHistoryAction(requestMessage, id);
+        HistoryAction historyAction = addHistoryAction(actionRequest.getMessageType());
         LoggerUtil.logTrace("tamagotchi sleeping");
 
         return new TamagotchiResponseBody(tamagotchi, historyAction);
     }
 
 
-    public TamagotchiResponseBody handleAwakeAction(RequestMessage requestMessage) throws RequestException, TamagotchiNotFoundException, InternalException {
-        int id = getIdFromMessage(requestMessage);
+    public TamagotchiResponseBody handleAwakeAction(ActionRequest actionRequest) throws TamagotchiNotFoundException, InternalException {
+        int id = getIdFromMessage();
 
         Tamagotchi tamagotchi = tamagotchiService.awakeTamagotchi(id);
-        HistoryAction historyAction = addHistoryAction(requestMessage, id);
+        HistoryAction historyAction = addHistoryAction(actionRequest.getMessageType());
         LoggerUtil.logTrace("tamagotchi playing");
 
         return new TamagotchiResponseBody(tamagotchi, historyAction);
     }
 
-    public TamagotchiResponseBody handlePlayAction(RequestMessage requestMessage) throws TamagotchiNotFoundException, RequestException, InternalException {
-        int id = getIdFromMessage(requestMessage);
+    public TamagotchiResponseBody handlePlayAction(ActionRequest actionRequest) throws TamagotchiNotFoundException, InternalException {
+        int id = getIdFromMessage();
 
         Tamagotchi tamagotchi = tamagotchiService.playWithTamagotchi(id);
-        HistoryAction historyAction = addHistoryAction(requestMessage, id);
+        HistoryAction historyAction = addHistoryAction(actionRequest.getMessageType());
         LoggerUtil.logTrace("tamagotchi playing");
 
         return new TamagotchiResponseBody(tamagotchi, historyAction);
     }
 
-    public TamagotchiResponseBody handleNameAction(RequestMessage requestMessage) throws RequestException, InternalException {
-        String name = requestMessage.getBody();
-        if (name.isEmpty()) {
-            throw new RequestException("Name cannot be empty");
-        }
+//    public TamagotchiResponseBody handleNameAction(ActionRequest actionRequest) throws RequestException, InternalException {
+//        String name = actionRequest.getBody();
+//        if (name.isEmpty()) {
+//            throw new RequestException("Name cannot be empty");
+//        }
+//
+//        Tamagotchi tamagotchi = tamagotchiService.createTamagotchi(name);
+//        HistoryAction historyAction = addHistoryAction(actionRequest.getMessageType());
+//        LoggerUtil.logTrace("tamagotchi created: " + name);
+//
+//        return new TamagotchiResponseBody(tamagotchi, historyAction);
+//    }
 
-        Tamagotchi tamagotchi = tamagotchiService.createTamagotchi(name);
-        HistoryAction historyAction = addHistoryAction(requestMessage, tamagotchi.getId());
-        LoggerUtil.logTrace("tamagotchi created: " + name);
-
-        return new TamagotchiResponseBody(tamagotchi, historyAction);
-    }
-
-    public TamagotchiWithFullHistoryResponseBody handleGetAction(RequestMessage requestMessage) throws RequestException, InternalException, TamagotchiNotFoundException {
-        int id = getIdFromMessage(requestMessage);
+    public TamagotchiWithFullHistoryResponseBody handleGetAction(ActionRequest actionRequest) throws InternalException, TamagotchiNotFoundException {
+        int id = getIdFromMessage();
 
         Tamagotchi tamagotchi = tamagotchiService.findTamagotchiById(id);
-        addHistoryAction(requestMessage, id);
+        addHistoryAction(actionRequest.getMessageType());
         LoggerUtil.logTrace("get tamagotchi: " + tamagotchi.toJSON());
 
         return new TamagotchiWithFullHistoryResponseBody(tamagotchi, historyActionService.getHistoryActionsForATamagotchi(id));
     }
 
-    private int getIdFromMessage(RequestMessage requestMessage) throws RequestException {
-        try {
-            return Integer.parseInt(requestMessage.getBody());
-        } catch (Exception e) {
-            throw new RequestException("Invalid id");
-        }
+    private int getIdFromMessage() {
+        return connectionRequest.getId();
     }
 
-    private HistoryAction addHistoryAction(RequestMessage requestMessage, int id) throws InternalException {
-        return historyActionService.createHistoryAction(requestMessage.getOwner(), requestMessage.getMessageType(), id);
+    private HistoryAction addHistoryAction(ActionType actionType) throws InternalException {
+        return historyActionService.createHistoryAction(connectionRequest.getOwner(), actionType, getIdFromMessage());
     }
 }

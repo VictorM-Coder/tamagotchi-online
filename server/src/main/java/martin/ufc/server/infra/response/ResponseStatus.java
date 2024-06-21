@@ -11,7 +11,7 @@ public enum ResponseStatus {
      */
     FAIL,
     /**
-     * Represents that an unknown error has occurred
+     * Represents that an error occurred
      */
     ERROR,
 }

@@ -1,13 +1,13 @@
 package martin.ufc.server;
 
-import martin.ufc.server.infra.handlers.ClientHandler;
+import martin.ufc.server.infra.handlers.CommunicationHandler;
 import martin.ufc.util.LoggerUtil;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class TCPServer {
+public class TCPServer  {
     private static final int PORT = 12345;
 
     public static void run() {
@@ -17,7 +17,6 @@ public class TCPServer {
                 Socket client = server.accept();
                 LoggerUtil.logTrace("Client Connected: " + client.getInetAddress());
                 handleClient(client);
-                LoggerUtil.logTrace("Client Disconnected: " + client.getInetAddress());
             }
         } catch (IOException ioException) {
             LoggerUtil.logError("Server failed");
@@ -25,8 +24,7 @@ public class TCPServer {
     }
 
     private static void handleClient(Socket client) {
-        ClientHandler clientHandler = new ClientHandler(client);
-        clientHandler.communicateWithClient();
-        clientHandler.closeClient();
+        CommunicationHandler communicationHandler = new CommunicationHandler(client);
+        communicationHandler.communicateWithClient();
     }
 }

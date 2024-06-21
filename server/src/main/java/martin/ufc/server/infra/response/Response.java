@@ -1,6 +1,7 @@
 package martin.ufc.server.infra.response;
 
 import martin.ufc.model.JSONfier;
+import martin.ufc.server.infra.response.body.ExceptionResponseBody;
 import martin.ufc.server.infra.response.body.ResponseBody;
 
 public class Response implements JSONfier{
@@ -24,11 +25,13 @@ public class Response implements JSONfier{
         return new Response(ResponseStatus.SUCCESS, responseBody);
     }
 
-    public static Response createFailResponse(ResponseBody responseBody) {
+    public static Response createFailResponse(JSONfier exception) {
+        ExceptionResponseBody responseBody = new ExceptionResponseBody(exception);
         return new Response(ResponseStatus.FAIL, responseBody);
     }
 
-    public static Response createErrorResponse(ResponseBody responseBody) {
+    public static Response createErrorResponse(JSONfier exception) {
+        ExceptionResponseBody responseBody = new ExceptionResponseBody(exception);
         return new Response(ResponseStatus.ERROR, responseBody);
     }
 }
