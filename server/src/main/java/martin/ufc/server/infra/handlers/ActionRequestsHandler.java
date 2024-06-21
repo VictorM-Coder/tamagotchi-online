@@ -33,10 +33,14 @@ public class ActionRequestsHandler implements Runnable {
     @Override
     public void run() {
         connectWithClient();
+
         while (connectionOn) {
             handleRequest();
         }
-        closeConnection();
+
+        if (ownerConnected != null) {
+            closeConnection();
+        }
     }
 
     private void handleRequest() {

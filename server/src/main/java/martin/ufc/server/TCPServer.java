@@ -1,6 +1,6 @@
 package martin.ufc.server;
 
-import martin.ufc.server.infra.handlers.CommunicationHandler;
+import martin.ufc.server.infra.handlers.ThreadCommunicationHandler;
 import martin.ufc.util.LoggerUtil;
 
 import java.io.IOException;
@@ -24,7 +24,6 @@ public class TCPServer  {
     }
 
     private static void handleClient(Socket client) {
-        CommunicationHandler communicationHandler = new CommunicationHandler(client);
-        communicationHandler.communicateWithClient();
+        ThreadCommunicationHandler.communicateWithClient(client);
     }
 }
