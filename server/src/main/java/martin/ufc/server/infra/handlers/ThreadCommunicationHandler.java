@@ -5,7 +5,7 @@ import java.net.Socket;
 public class ThreadCommunicationHandler {
     private ThreadCommunicationHandler() {}
     public static void communicateWithClient(Socket client) {
-        Thread thread = new Thread(new ActionRequestsHandler(client));
+        Thread thread = new Thread(new RequestHandler(client));
         thread.start();
     }
 }

@@ -1,4 +1,4 @@
-package martin.ufc.server.infra.request;
+package martin.ufc.server.infra.request.action;
 
 public enum ActionType {
     EAT,

@@ -7,7 +7,9 @@ import martin.ufc.model.tamagotchi.Tamagotchi;
 import martin.ufc.persistence.repository.TamagotchiRepository;
 
 public class TamagotchiService {
-    public Tamagotchi createTamagotchi(String name) throws InternalException {
+    private TamagotchiService() {}
+
+    public static Tamagotchi createTamagotchi(String name) throws InternalException {
         try {
             var tamagotchi = new Tamagotchi(name);
             int id = TamagotchiRepository.add(tamagotchi);
@@ -18,35 +20,35 @@ public class TamagotchiService {
         }
     }
 
-    public Tamagotchi feedTamagotchi(int id) throws TamagotchiNotFoundException, InternalException {
+    public static Tamagotchi feedTamagotchi(int id) throws TamagotchiNotFoundException, InternalException {
         final var tamagotchi = findTamagotchiById(id);
         tamagotchi.eat();
 
         return updateTamagotchi(id, tamagotchi);
     }
 
-    public Tamagotchi putTamagotchiToSleep(int id) throws TamagotchiNotFoundException, InternalException {
+    public static Tamagotchi putTamagotchiToSleep(int id) throws TamagotchiNotFoundException, InternalException {
         final var tamagotchi = findTamagotchiById(id);
         tamagotchi.sleep();
 
         return updateTamagotchi(id, tamagotchi);
     }
 
-    public Tamagotchi awakeTamagotchi(int id) throws TamagotchiNotFoundException, InternalException {
+    public static Tamagotchi awakeTamagotchi(int id) throws TamagotchiNotFoundException, InternalException {
         final var tamagotchi = findTamagotchiById(id);
         tamagotchi.awake();
 
         return updateTamagotchi(id, tamagotchi);
     }
 
-    public Tamagotchi playWithTamagotchi(int id) throws TamagotchiNotFoundException, InternalException {
+    public static Tamagotchi playWithTamagotchi(int id) throws TamagotchiNotFoundException, InternalException {
         final var tamagotchi = findTamagotchiById(id);
         tamagotchi.play();
 
         return updateTamagotchi(id, tamagotchi);
     }
 
-    public Tamagotchi findTamagotchiById(int id) throws TamagotchiNotFoundException {
+    public static Tamagotchi findTamagotchiById(int id) throws TamagotchiNotFoundException {
         try {
             return TamagotchiRepository.findById(id);
         } catch (SQLiteException e) {
@@ -54,7 +56,7 @@ public class TamagotchiService {
         }
     }
 
-    private Tamagotchi updateTamagotchi(int id, Tamagotchi tamagotchi) throws InternalException {
+    private static Tamagotchi updateTamagotchi(int id, Tamagotchi tamagotchi) throws InternalException {
         try {
             TamagotchiRepository.update(id, tamagotchi);
             return tamagotchi;

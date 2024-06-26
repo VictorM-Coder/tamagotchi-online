@@ -5,10 +5,12 @@ import martin.ufc.exception.SQLiteException;
 import martin.ufc.model.history.History;
 import martin.ufc.model.history.HistoryAction;
 import martin.ufc.persistence.repository.HistoryActionsRepository;
-import martin.ufc.server.infra.request.ActionType;
+import martin.ufc.server.infra.request.action.ActionType;
 
 public class HistoryActionService {
-    public HistoryAction createHistoryAction(String username, ActionType actionType, int tamagotchiId) throws InternalException {
+    private HistoryActionService() {}
+
+    public static HistoryAction createHistoryAction(String username, String actionType, int tamagotchiId) throws InternalException {
         try {
             HistoryAction historyAction = new HistoryAction(username, tamagotchiId, actionType);
             int id = HistoryActionsRepository.add(historyAction);
@@ -20,7 +22,7 @@ public class HistoryActionService {
         }
     }
 
-    public History getHistoryActionsForATamagotchi(int tamagotchiId) throws InternalException {
+    public static History getHistoryActionsForATamagotchi(int tamagotchiId) throws InternalException {
         try {
             return HistoryActionsRepository.getHistoryActionsForATamagotchi(tamagotchiId);
         } catch (SQLiteException e) {

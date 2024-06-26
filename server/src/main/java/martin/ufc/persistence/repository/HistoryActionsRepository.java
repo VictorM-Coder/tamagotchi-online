@@ -4,7 +4,7 @@ import martin.ufc.exception.SQLiteException;
 import martin.ufc.model.history.History;
 import martin.ufc.model.history.HistoryAction;
 import martin.ufc.persistence.database.SQLiteStatement;
-import martin.ufc.server.infra.request.ActionType;
+import martin.ufc.server.infra.request.action.ActionType;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -41,7 +41,7 @@ public class HistoryActionsRepository {
                 ActionType action = ActionType.valueOf(resultSet.getString("action"));
                 LocalDateTime dateTime = LocalDateTime.parse(resultSet.getString("date_time"));
 
-                historyActions.add(new HistoryAction(username, tamagotchiId, action, dateTime));
+                historyActions.add(new HistoryAction(username, tamagotchiId, action.toString(), dateTime));
             }
         } catch (SQLException e) {
             throw new SQLiteException(e.getMessage());

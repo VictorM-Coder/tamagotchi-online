@@ -1,14 +1,10 @@
-package martin.ufc.server.infra.request;
+package martin.ufc.server.infra.request.action;
 
 import martin.ufc.exception.InvalidMessageException;
+import martin.ufc.server.infra.request.Request;
 
-public class ActionRequest {
+public class ActionRequest implements Request {
     private final ActionType actionType;
-
-    @Override
-    public String toString() {
-        return actionType + " ";
-    }
 
     public ActionRequest(String message) throws InvalidMessageException {
         try {
@@ -17,7 +13,6 @@ public class ActionRequest {
             throw new InvalidMessageException("Invalid MessageType");
         }
     }
-
 
     public ActionType getMessageType() {
         return actionType;

@@ -3,12 +3,18 @@ package martin.ufc.server.infra.handlers;
 import martin.ufc.exception.InternalException;
 import martin.ufc.exception.RequestException;
 import martin.ufc.exception.TamagotchiNotFoundException;
-import martin.ufc.server.infra.request.ActionRequest;
-import martin.ufc.server.infra.request.ConnectionRequest;
-import martin.ufc.server.infra.request.RequestFactory;
-import martin.ufc.server.infra.response.dto.Response;
+import martin.ufc.server.infra.request.DataInputStreamReader;
+import martin.ufc.server.infra.request.action.ActionRequest;
+import martin.ufc.server.infra.request.factory.RequestFactoryProvider;
+import martin.ufc.server.infra.request.no_connected.ConnectionRequest;
+import martin.ufc.server.infra.request.no_connected.CreationRequest;
+import martin.ufc.server.infra.request.no_connected.NoConnectedRequest;
+import martin.ufc.server.infra.request.no_connected.NoConnectedRequestType;
 import martin.ufc.server.infra.response.ResponseMessenger;
+import martin.ufc.server.infra.response.dto.Response;
 import martin.ufc.server.infra.response.dto.ResponseBody;
+import martin.ufc.server.infra.response.dto.TamagotchiResponseBody;
+import martin.ufc.server.infra.response.dto.TamagotchiWithFullHistoryResponseBody;
 import martin.ufc.util.LoggerUtil;
 
 import java.io.DataInputStream;
@@ -16,7 +22,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
 
-public class ActionRequestsHandler implements Runnable {
+public class RequestHandler implements Runnable {
     private DataInputStream dataInputStream;
     private OutputStream outputStream;
     private ActionsHandler actionsHandler;
@@ -25,14 +31,14 @@ public class ActionRequestsHandler implements Runnable {
     private String ownerConnected;
 
 
-    public ActionRequestsHandler(Socket client) {
+    public RequestHandler(Socket client) {
         this.client = client;
         setDataStreams();
     }
 
     @Override
     public void run() {
-        connectWithClient();
+        handleNoConnectedRequests();
 
         while (connectionOn) {
             handleRequest();
@@ -44,18 +50,18 @@ public class ActionRequestsHandler implements Runnable {
     }
 
     private void handleRequest() {
-        Response response;
+        Response response = null;
         try {
-            ActionRequest actionRequest = RequestFactory.createActionRequest(dataInputStream);
+            String request = DataInputStreamReader.read(dataInputStream);
+            ActionRequest actionRequest = RequestFactoryProvider.createActionRequest(request);
             ResponseBody responseBody = executeAction(actionRequest);
             response = Response.createSuccessResponse(responseBody);
-            ResponseMessenger.sendResponse(outputStream, response);
 
         } catch (RequestException requestException) {
             response = Response.createErrorResponse(requestException);
-            ResponseMessenger.sendResponse(outputStream, response);
         } catch (TamagotchiNotFoundException | InternalException exception) {
             response = Response.createFailResponse(exception);
+        } finally {
             ResponseMessenger.sendResponse(outputStream, response);
         }
 
@@ -68,8 +74,6 @@ public class ActionRequestsHandler implements Runnable {
             case SLEEP -> actionsHandler.handleSleepAction(actionRequest);
             case AWAKE -> actionsHandler.handleAwakeAction(actionRequest);
             case PLAY -> actionsHandler.handlePlayAction(actionRequest);
-            //TODO refazer criação de tamagotchi
-//            case NAME -> actionsHandler.handleNameAction(actionRequest);
             case GET -> actionsHandler.handleGetAction(actionRequest);
             case END -> endConnection();
         };
@@ -101,16 +105,42 @@ public class ActionRequestsHandler implements Runnable {
         }
     }
 
-    private void connectWithClient() {
+    private void handleNoConnectedRequests() {
+        Response response = null;
         try {
-            ConnectionRequest connectionRequest = RequestFactory.createConnectionRequest(dataInputStream);
-            actionsHandler = new ActionsHandler(connectionRequest);
-            connectionOn = true;
-            ownerConnected = connectionRequest.getOwner();
-            LoggerUtil.logTrace(ownerConnected + " entered");
+            String request = DataInputStreamReader.read(dataInputStream);
+            NoConnectedRequest noConnectedRequest = RequestFactoryProvider.createNoConnectedRequest(request);
+
+            if (noConnectedRequest.getType().equals(NoConnectedRequestType.CONNECT)) {
+                connect((ConnectionRequest) noConnectedRequest);
+                ResponseBody responseBody = actionsHandler.handleGetAction(new ActionRequest("GET"));
+                response  = Response.createSuccessResponse(responseBody);
+            } else if (noConnectedRequest.getType().equals(NoConnectedRequestType.CREATE)) {
+                ResponseBody responseBody = createTamagotchi((CreationRequest) noConnectedRequest);
+                response  = Response.createSuccessResponse(responseBody);
+            }
+
         } catch (RequestException requestException) {
-            Response response = Response.createFailResponse(requestException);
+            response = Response.createFailResponse(requestException);
+        }  catch (InternalException e) {
+            response = Response.createErrorResponse(e);
+        } catch (Exception e) {
+            response = Response.createErrorResponse(new InternalException("Unknown error"));
+        }
+        finally {
             ResponseMessenger.sendResponse(outputStream, response);
         }
+    }
+
+    private ResponseBody createTamagotchi(CreationRequest noConnectedRequest) throws InternalException {
+        return CreateHandler.handleCreateAction(noConnectedRequest);
+    }
+
+    private void connect(ConnectionRequest noConnectedRequest) {
+        ConnectionRequest connectionRequest = noConnectedRequest;
+        actionsHandler = new ActionsHandler(connectionRequest);
+        connectionOn = true;
+        ownerConnected = connectionRequest.getOwner();
+        LoggerUtil.logTrace(ownerConnected + " entered");
     }
 }
