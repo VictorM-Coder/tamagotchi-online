@@ -42,9 +42,7 @@ public class RequestHandler implements Runnable {
             handleActionRequests();
         }
 
-        if (ownerConnected != null) {
-            closeConnection();
-        }
+        closeConnection();
     }
 
     private void handleActionRequests() {
@@ -72,9 +70,9 @@ public class RequestHandler implements Runnable {
             response = executeNoConnectedRequest(noConnectedRequest);
 
         } catch (RequestException requestException) {
-            response = Response.createFailResponse(requestException);
-        }  catch (InternalException e) {
-            response = Response.createErrorResponse(e);
+            response = Response.createErrorResponse(requestException);
+        }  catch (InternalException | TamagotchiNotFoundException e) {
+            response = Response.createFailResponse(e);
         } catch (Exception e) {
             response = Response.createErrorResponse(new InternalException("Unknown error"));
         }
@@ -119,9 +117,9 @@ public class RequestHandler implements Runnable {
     private void closeConnection() {
         try {
             client.close();
-            dataInputStream.close();
-            outputStream.close();
-            LoggerUtil.logTrace(ownerConnected + " left");
+            if (dataInputStream != null) dataInputStream.close();
+            if (outputStream != null) outputStream.close();
+            if (ownerConnected != null) LoggerUtil.logTrace(ownerConnected + " left");
         } catch (IOException e) {
             LoggerUtil.logError("Error while closing the client");
         }
