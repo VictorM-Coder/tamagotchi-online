@@ -1,6 +1,7 @@
 package martin.ufc.model.history;
 
 import martin.ufc.model.JSONfier;
+import martin.ufc.server.infra.request.types.RequestType;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -9,7 +10,7 @@ public class HistoryAction implements JSONfier {
     private int id;
     private String username;
     private int tamagotchiId;
-    private String action;
+    private RequestType action;
     private LocalDateTime dateTime;
 
     @Override
@@ -29,14 +30,14 @@ public class HistoryAction implements JSONfier {
         this.id = id;
     }
 
-    public HistoryAction(String username, int tamagotchiId, String action) {
+    public HistoryAction(String username, int tamagotchiId, RequestType action) {
         this.username = username;
         this.tamagotchiId = tamagotchiId;
         this.action = action;
         this.dateTime = LocalDateTime.now();
     }
 
-    public HistoryAction(String username, int tamagotchiId, String action, LocalDateTime dateTime) {
+    public HistoryAction(String username, int tamagotchiId, RequestType action, LocalDateTime dateTime) {
         this.username = username;
         this.tamagotchiId = tamagotchiId;
         this.action = action;
@@ -51,7 +52,7 @@ public class HistoryAction implements JSONfier {
         return tamagotchiId;
     }
 
-    public String getAction() {
+    public RequestType getAction() {
         return action;
     }
 

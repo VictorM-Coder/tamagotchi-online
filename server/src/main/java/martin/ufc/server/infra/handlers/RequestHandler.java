@@ -9,12 +9,10 @@ import martin.ufc.server.infra.request.factory.RequestFactoryProvider;
 import martin.ufc.server.infra.request.no_connected.ConnectionRequest;
 import martin.ufc.server.infra.request.no_connected.CreationRequest;
 import martin.ufc.server.infra.request.no_connected.NoConnectedRequest;
-import martin.ufc.server.infra.request.no_connected.NoConnectedRequestType;
+import martin.ufc.server.infra.request.types.NoConnectedRequestType;
 import martin.ufc.server.infra.response.ResponseMessenger;
 import martin.ufc.server.infra.response.dto.Response;
 import martin.ufc.server.infra.response.dto.ResponseBody;
-import martin.ufc.server.infra.response.dto.TamagotchiResponseBody;
-import martin.ufc.server.infra.response.dto.TamagotchiWithFullHistoryResponseBody;
 import martin.ufc.util.LoggerUtil;
 
 import java.io.DataInputStream;
@@ -69,7 +67,7 @@ public class RequestHandler implements Runnable {
     }
 
     private ResponseBody executeAction(ActionRequest actionRequest) throws TamagotchiNotFoundException, InternalException {
-        return switch (actionRequest.getMessageType()) {
+        return switch (actionRequest.getActionType()) {
             case EAT -> actionsHandler.handleEatAction(actionRequest);
             case SLEEP -> actionsHandler.handleSleepAction(actionRequest);
             case AWAKE -> actionsHandler.handleAwakeAction(actionRequest);

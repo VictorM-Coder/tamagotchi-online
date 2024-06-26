@@ -1,6 +1,7 @@
 package martin.ufc.server.infra.request.no_connected;
 
 import martin.ufc.server.infra.request.Request;
+import martin.ufc.server.infra.request.types.NoConnectedRequestType;
 
 public class CreationRequest extends NoConnectedRequest implements Request {
     private final String tamagotchiName;

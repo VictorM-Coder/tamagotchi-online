@@ -4,7 +4,7 @@ import martin.ufc.exception.RequestException;
 import martin.ufc.server.infra.request.no_connected.ConnectionRequest;
 import martin.ufc.server.infra.request.no_connected.CreationRequest;
 import martin.ufc.server.infra.request.no_connected.NoConnectedRequest;
-import martin.ufc.server.infra.request.no_connected.NoConnectedRequestType;
+import martin.ufc.server.infra.request.types.NoConnectedRequestType;
 
 public class NoConnectedRequestFactory extends RequestFactory<NoConnectedRequest> {
     private static final int TYPE_INDEX = 0;

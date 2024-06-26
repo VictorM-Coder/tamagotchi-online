@@ -1,6 +1,7 @@
 package martin.ufc.server.infra.request.no_connected;
 
 import martin.ufc.server.infra.request.Request;
+import martin.ufc.server.infra.request.types.NoConnectedRequestType;
 
 public abstract class NoConnectedRequest implements Request {
     private final NoConnectedRequestType type;

@@ -20,7 +20,7 @@ public class CreateHandler {
 
         HistoryAction historyAction = HistoryActionService.createHistoryAction(
                 creationRequest.getOwner(),
-                creationRequest.getType().toString(),
+                creationRequest.getType(),
                 tamagotchi.getId()
         );
 

@@ -4,7 +4,7 @@ import martin.ufc.exception.SQLiteException;
 import martin.ufc.model.history.History;
 import martin.ufc.model.history.HistoryAction;
 import martin.ufc.persistence.database.SQLiteStatement;
-import martin.ufc.server.infra.request.action.ActionType;
+import martin.ufc.server.infra.request.types.ActionType;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
