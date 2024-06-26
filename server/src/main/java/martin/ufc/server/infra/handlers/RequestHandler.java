@@ -3,7 +3,7 @@ package martin.ufc.server.infra.handlers;
 import martin.ufc.exception.InternalException;
 import martin.ufc.exception.RequestException;
 import martin.ufc.exception.TamagotchiNotFoundException;
-import martin.ufc.server.infra.data_stream_handlers.DataInputStreamReader;
+import martin.ufc.server.infra.data_stream_handlers.RequestReader;
 import martin.ufc.server.infra.request.action.ActionRequest;
 import martin.ufc.server.infra.request.factory.RequestFactoryProvider;
 import martin.ufc.server.infra.request.no_connected.ConnectionRequest;
@@ -19,6 +19,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.concurrent.TimeoutException;
 
 public class RequestHandler implements Runnable {
     private DataInputStream dataInputStream;
@@ -57,6 +58,13 @@ public class RequestHandler implements Runnable {
             response = Response.createErrorResponse(requestException);
         } catch (TamagotchiNotFoundException | InternalException exception) {
             response = Response.createFailResponse(exception);
+            connectionOn = false;
+        } catch (TimeoutException e) {
+            response = Response.createErrorResponse(new RequestException("Timeout"));
+            LoggerUtil.logError("Timeout");
+            connectionOn = false;
+        } catch (Exception e) {
+            response = Response.createErrorResponse(new InternalException("Unknown error"));
         } finally {
             ResponseMessenger.sendResponse(outputStream, response);
         }
@@ -73,10 +81,14 @@ public class RequestHandler implements Runnable {
             response = Response.createErrorResponse(requestException);
         }  catch (InternalException | TamagotchiNotFoundException e) {
             response = Response.createFailResponse(e);
+            connectionOn = false;
+        } catch (TimeoutException e) {
+            response = Response.createErrorResponse(new RequestException("Timeout"));
+            LoggerUtil.logError("Timeout");
+            connectionOn = false;
         } catch (Exception e) {
             response = Response.createErrorResponse(new InternalException("Unknown error"));
-        }
-        finally {
+        } finally {
             ResponseMessenger.sendResponse(outputStream, response);
         }
     }
@@ -105,8 +117,8 @@ public class RequestHandler implements Runnable {
         }
     }
 
-    private String readRequest() throws RequestException {
-        return DataInputStreamReader.read(dataInputStream);
+    private String readRequest() throws RequestException, TimeoutException {
+        return RequestReader.read(dataInputStream);
     }
 
     private ResponseBody endConnection() {
