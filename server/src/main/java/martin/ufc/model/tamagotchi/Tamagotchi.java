@@ -13,7 +13,7 @@ public class Tamagotchi implements JSONfier {
     public static final int MAJOR_VALUE = 30;
     public static final int HUGE_VALUE = 50;
     private int id;
-    private LocalDate birthday;
+    private final LocalDate birthday;
     private final String name;
     private boolean isSleeping;
     private LocalDateTime startedSleeping;

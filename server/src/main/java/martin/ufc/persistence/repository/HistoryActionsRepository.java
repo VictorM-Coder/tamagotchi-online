@@ -29,7 +29,6 @@ public class HistoryActionsRepository {
         return id;
     }
 
-    //TODO adicionar id na resposta
     public static History getHistoryActionsForATamagotchi(int tamagotchiId) throws SQLiteException {
         String sql = "SELECT * FROM history_action_tb WHERE tamagotchi_id = ?";
         SQLiteStatement statement = new SQLiteStatement(sql);
@@ -41,7 +40,7 @@ public class HistoryActionsRepository {
                 ActionType action = ActionType.valueOf(resultSet.getString("action"));
                 LocalDateTime dateTime = LocalDateTime.parse(resultSet.getString("date_time"));
 
-                historyActions.add(new HistoryAction(username, tamagotchiId, action.toString(), dateTime));
+                historyActions.add(new HistoryAction(username, tamagotchiId, action, dateTime));
             }
         } catch (SQLException e) {
             throw new SQLiteException(e.getMessage());

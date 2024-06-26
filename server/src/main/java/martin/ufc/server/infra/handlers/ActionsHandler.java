@@ -6,7 +6,6 @@ import martin.ufc.model.history.HistoryAction;
 import martin.ufc.model.tamagotchi.Tamagotchi;
 import martin.ufc.server.infra.request.action.ActionRequest;
 import martin.ufc.server.infra.request.no_connected.ConnectionRequest;
-import martin.ufc.server.infra.request.types.RequestType;
 import martin.ufc.server.infra.response.dto.TamagotchiResponseBody;
 import martin.ufc.server.infra.response.dto.TamagotchiWithFullHistoryResponseBody;
 import martin.ufc.server.infra.services.HistoryActionService;
@@ -52,20 +51,15 @@ public class ActionsHandler {
         Tamagotchi tamagotchi = TamagotchiService.findTamagotchiById(getIdFromMessage());
         LoggerUtil.logTrace("get tamagotchi: " + tamagotchi.toJSON());
 
-        addHistoryAction(actionRequest.getActionType());
         return new TamagotchiWithFullHistoryResponseBody(tamagotchi, HistoryActionService.getHistoryActionsForATamagotchi(getIdFromMessage()));
     }
 
     private TamagotchiResponseBody buildTamagotchiResponse(ActionRequest actionRequest, Tamagotchi tamagotchi) throws InternalException {
-        HistoryAction historyAction = addHistoryAction(actionRequest.getActionType());
+        HistoryAction historyAction = HistoryActionService.createHistoryAction(connectionRequest.getOwner(), actionRequest.getActionType(), getIdFromMessage());
         return new TamagotchiResponseBody(tamagotchi, historyAction);
     }
 
     private int getIdFromMessage() {
         return connectionRequest.getId();
-    }
-
-    private HistoryAction addHistoryAction(RequestType requestType) throws InternalException {
-        return HistoryActionService.createHistoryAction(connectionRequest.getOwner(), requestType, getIdFromMessage());
     }
 }

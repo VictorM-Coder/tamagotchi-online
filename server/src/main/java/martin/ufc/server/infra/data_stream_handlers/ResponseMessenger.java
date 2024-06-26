@@ -1,4 +1,4 @@
-package martin.ufc.server.infra.response;
+package martin.ufc.server.infra.data_stream_handlers;
 
 import martin.ufc.server.infra.response.dto.Response;
 import martin.ufc.util.LoggerUtil;

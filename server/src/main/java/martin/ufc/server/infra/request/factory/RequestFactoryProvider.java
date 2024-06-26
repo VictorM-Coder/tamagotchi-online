@@ -7,6 +7,7 @@ import martin.ufc.server.infra.request.factory.factories.NoConnectedRequestFacto
 import martin.ufc.server.infra.request.no_connected.NoConnectedRequest;
 
 public class RequestFactoryProvider {
+    private RequestFactoryProvider() {}
     private static final ActionRequestFactory ACTION_REQUEST_FACTORY = new ActionRequestFactory();
     private static final NoConnectedRequestFactory NO_CONNECTED_REQUEST_FACTORY = new NoConnectedRequestFactory();
 

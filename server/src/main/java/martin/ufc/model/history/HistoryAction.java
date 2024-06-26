@@ -8,10 +8,10 @@ import java.time.format.DateTimeFormatter;
 
 public class HistoryAction implements JSONfier {
     private int id;
-    private String username;
-    private int tamagotchiId;
-    private RequestType action;
-    private LocalDateTime dateTime;
+    private final String username;
+    private final int tamagotchiId;
+    private final RequestType action;
+    private final LocalDateTime dateTime;
 
     @Override
     public String toJSON() {

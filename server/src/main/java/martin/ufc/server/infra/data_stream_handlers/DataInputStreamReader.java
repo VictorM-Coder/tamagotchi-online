@@ -1,4 +1,4 @@
-package martin.ufc.server.infra.request;
+package martin.ufc.server.infra.data_stream_handlers;
 
 import martin.ufc.exception.RequestException;
 import martin.ufc.util.LoggerUtil;
