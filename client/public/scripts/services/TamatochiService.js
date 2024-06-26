@@ -1,27 +1,35 @@
 class TamagotchiService {
+    async connectToTamagotchi(username, id) {
+        const params = new URLSearchParams({ username, id });
+        return this.#sendRequest(`/api/connect?${params.toString()}`, "GET");
+    }
+
     async createTamagotchi(username, tamagotchiName) {
         return this.#sendRequest("/api/create", "POST", { username, tamagotchiName });
     }
 
-    async feedTamagotchi(username, id) {
-        return this.#sendRequest("/api/eat", "PUT", { username, id });
+    async feedTamagotchi() {
+        return this.#sendRequest("/api/eat", "PUT");
     }
 
-    async putTamagotchiToSleep(username, id) {
-        return this.#sendRequest("/api/sleep", "PUT", { username, id });
+    async putTamagotchiToSleep() {
+        return this.#sendRequest("/api/sleep", "PUT");
     }
 
-    async playWithTamagotchi(username, id) {
-        return this.#sendRequest("/api/play", "PUT", { username, id });
+    async playWithTamagotchi() {
+        return this.#sendRequest("/api/play", "PUT");
     }
 
-    async awakeTamagotchi(username, id) {
-        return this.#sendRequest("/api/awake", "PUT", { username, id });
+    async awakeTamagotchi() {
+        return this.#sendRequest("/api/awake", "PUT");
     }
 
-    async getTamagotchi(username, id) {
-        const params = new URLSearchParams({ username, id });
-        return this.#sendRequest(`/api/get?${params.toString()}`, "GET");
+    async getTamagotchi() {
+        return this.#sendRequest('/api/get', "GET");
+    }
+
+    async disconnectTamagotchi() {
+        return this.#sendRequest('/api/end', "GET");
     }
 
     async #sendRequest(url, method, body) {

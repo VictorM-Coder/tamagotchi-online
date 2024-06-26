@@ -6,7 +6,7 @@ loginScreen.addEventListener("connectEvent", async (ev) => {
     const username = ev.detail.username
     const id = ev.detail.id
 
-    const response = await tamagotchiService.getTamagotchi(username, id)
+    const response = await tamagotchiService.connectToTamagotchi(username, id)
     if (response) {
         tamagotchiScreen.tamagotchi = response.tamagotchi
         tamagotchiScreen.history = response.history

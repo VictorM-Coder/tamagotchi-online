@@ -95,7 +95,7 @@ class TamagotchiScreenComponent extends HTMLElement {
                             <button id="btn-play" class="mt-2">
                                 Play
                             </button>
-                            <button class="mt-2">
+                            <button id="btn-disconnect" class="mt-2">
                                 Disconect
                             </button>
                         </div>
@@ -109,6 +109,7 @@ class TamagotchiScreenComponent extends HTMLElement {
         const btnFeed = document.getElementById("btn-feed")
         const btnSleep = document.getElementById("btn-sleep")
         const btnPlay = document.getElementById("btn-play")
+        const btnDisconnect = document.getElementById("btn-disconnect")
         const imgCat = document.getElementById("img-cat")
 
         header.innerText = `${this.tamagotchi.name} - ${this.tamagotchi.ageInDays} Days`
@@ -145,6 +146,16 @@ class TamagotchiScreenComponent extends HTMLElement {
                 })
                 this.dispatchEvent(feedTamagochiEvent)
             }, 3000)
+
+        })
+
+        btnDisconnect.addEventListener("click", () => {
+            this.disableActions()
+
+            const disconnectTamagotchiEvent = new CustomEvent("disconnectTamagotchiEvent", {
+                bubbles: true,
+            })
+            this.dispatchEvent(disconnectTamagotchiEvent)
 
         })
 

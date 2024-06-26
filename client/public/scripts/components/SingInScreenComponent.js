@@ -60,7 +60,7 @@ class SingInScreenComponent extends HTMLElement {
 
         buttonCancelSignIn.addEventListener("click", function (ev) {
             ev.preventDefault()
-            goToLoginFromSignInScreen()
+            goToLoginScreen()
         })
     }
 }

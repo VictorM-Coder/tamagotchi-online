@@ -6,6 +6,6 @@ function goToSignInScreen() {
     document.body.replaceChildren(signInScreen)
 }
 
-function goToLoginFromSignInScreen() {
+function goToLoginScreen() {
     document.body.replaceChildren(loginScreen)
 }

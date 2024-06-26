@@ -3,7 +3,17 @@ const net = require("net");
 
 const router = express.Router();
 const TamagotchiService = require("./TamagotchiService");
-const service = new TamagotchiService()
+let service
+
+router.get('/connect', async (req, res) => {
+    service = new TamagotchiService()
+    const username = req.query.username
+    const id = req.query.id
+
+    const response = await service.connectToTamagotchi(username, id)
+    res.send(response)
+});
+
 
 router.post('/create', async (req, res) => {
     const username = req.body.username
@@ -14,42 +24,32 @@ router.post('/create', async (req, res) => {
 });
 
 router.put('/eat', async (req, res) => {
-    const username = req.body.username
-    const id = req.body.id
-
-    const response = await service.feedTamagotchi(username, id)
+    const response = await service.feedTamagotchi()
     res.send(response)
 });
 
 router.put('/play', async (req, res) => {
-    const username = req.body.username
-    const id = req.body.id
-
-    const response = await service.playWithTamagotchi(username, id)
+    const response = await service.playWithTamagotchi()
     res.send(response)
 });
 
 router.put('/sleep', async (req, res) => {
-    const username = req.body.username
-    const id = req.body.id
-
-    const response = await service.putTamagotchiToSleep(username, id)
+    const response = await service.putTamagotchiToSleep()
     res.send(response)
 });
 
 router.put('/awake', async (req, res) => {
-    const username = req.body.username
-    const id = req.body.id
-
-    const response = await service.awakeTamagotchi(username, id)
+    const response = await service.awakeTamagotchi()
     res.send(response)
 });
 
 router.get('/get', async (req, res) => {
-    const username = req.query.username
-    const id = req.query.id
+    const response = await service.getTamagotchi()
+    res.send(response)
+});
 
-    const response = await service.getTamagotchi(username, id)
+router.get('/end', async (req, res) => {
+    const response = await service.disconnectTamagotchi()
     res.send(response)
 });
 

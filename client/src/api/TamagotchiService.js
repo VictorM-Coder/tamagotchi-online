@@ -1,46 +1,47 @@
 const TamagotchiRepository = require("./TamagotchiRepository")
 
 class TamagotchiService {
-    repository = new TamagotchiRepository()
+    constructor() {
+        this.repository = new TamagotchiRepository()
+    }
+
+    async connectToTamagotchi(username, id)  {
+        const request = TamagotchiService.#buildRequest("CONNECT", username, id)
+        return await this.repository.communicateWithServer(request)
+    }
+
     async createTamagotchi(username, tamagotchiName)  {
-        const request = TamagotchiService.#buildRequest(username, "NAME", tamagotchiName)
+        const request = TamagotchiService.#buildRequest("CREATE", username, tamagotchiName)
         return await this.repository.communicateWithServer(request)
     }
 
-    async playWithTamagotchi(username, id)  {
-        const request = TamagotchiService.#buildRequest(username, "PLAY", id)
-        return await this.repository.communicateWithServer(request)
+    async playWithTamagotchi()  {
+        return await this.repository.communicateWithServer("PLAY\n")
     }
 
-    async putTamagotchiToSleep(username, id)  {
-        const request = TamagotchiService.#buildRequest(username, "SLEEP", id)
-        return await this.repository.communicateWithServer(request)
+    async putTamagotchiToSleep()  {
+        return await this.repository.communicateWithServer("SLEEP\n")
     }
 
-    async feedTamagotchi(username, id)  {
-        const request = TamagotchiService.#buildRequest(username, "EAT", id)
-        return await this.repository.communicateWithServer(request)
+    async feedTamagotchi()  {
+        return await this.repository.communicateWithServer("EAT\n")
     }
 
-    async awakeTamagotchi(username, id)  {
-        const request = TamagotchiService.#buildRequest(username, "AWAKE", id)
-        return await this.repository.communicateWithServer(request)
+    async awakeTamagotchi()  {
+        return await this.repository.communicateWithServer("AWAKE\n")
     }
 
-    async getTamagotchi(username, id)  {
-        const request = TamagotchiService.#buildRequest(username, "GET", id)
-        return await this.repository.communicateWithServer(request)
+    async getTamagotchi()  {
+        return await this.repository.communicateWithServer("GET\n")
     }
 
-    static #buildRequest(name, action, body) {
-        if (body){
-            return `${name} ${action} ${body}\n`
-        } else {
-            return `${name} ${action}\n`
-        }
+    async disconnectTamagotchi()  {
+        return await this.repository.communicateWithServer("END\n")
+    }
+
+    static #buildRequest(action, owner, body) {
+        return `${action} ${owner} ${body}\n`
     }
 }
-
-
 
 module.exports = TamagotchiService

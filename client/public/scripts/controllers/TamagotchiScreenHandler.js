@@ -1,6 +1,5 @@
 tamagotchiScreen.addEventListener("feedTamagotchi", async () => {
-    const user = LocalstorageUtils.getUser()
-    const response = await tamagotchiService.feedTamagotchi(user.username, user.id)
+    const response = await tamagotchiService.feedTamagotchi()
 
     if (response) {
         handleResponse(response);
@@ -10,8 +9,7 @@ tamagotchiScreen.addEventListener("feedTamagotchi", async () => {
 })
 
 tamagotchiScreen.addEventListener("putTamagochiToSleepEvent", async () => {
-    const user = LocalstorageUtils.getUser()
-    const response = await tamagotchiService.putTamagotchiToSleep(user.username, user.id)
+    const response = await tamagotchiService.putTamagotchiToSleep()
 
     if (response) {
         handleResponse(response)
@@ -21,8 +19,7 @@ tamagotchiScreen.addEventListener("putTamagochiToSleepEvent", async () => {
 })
 
 tamagotchiScreen.addEventListener("awakeTamagotchiEvent", async () => {
-    const user = LocalstorageUtils.getUser()
-    const response = await tamagotchiService.awakeTamagotchi(user.username, user.id)
+    const response = await tamagotchiService.awakeTamagotchi()
 
     if (response) {
         handleResponse(response)
@@ -32,14 +29,18 @@ tamagotchiScreen.addEventListener("awakeTamagotchiEvent", async () => {
 })
 
 tamagotchiScreen.addEventListener("playWithTamagotchi", async () => {
-    const user = LocalstorageUtils.getUser()
-    const response = await tamagotchiService.playWithTamagotchi(user.username, user.id)
+    const response = await tamagotchiService.playWithTamagotchi()
 
     if (response) {
         handleResponse(response)
     } else {
         window.alert("Failed to play with the Tamagotchi")
     }
+})
+
+tamagotchiScreen.addEventListener("disconnectTamagotchiEvent", async () => {
+    await tamagotchiService.disconnectTamagotchi()
+    goToLoginScreen()
 })
 
 
