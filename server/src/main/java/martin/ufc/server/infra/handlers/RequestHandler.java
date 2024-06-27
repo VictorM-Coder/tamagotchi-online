@@ -1,6 +1,7 @@
 package martin.ufc.server.infra.handlers;
 
 import martin.ufc.exception.InternalException;
+import martin.ufc.exception.WriteOutputStreamException;
 import martin.ufc.exception.RequestException;
 import martin.ufc.exception.TamagotchiNotFoundException;
 import martin.ufc.server.infra.data_stream_handlers.RequestReader;
@@ -61,12 +62,11 @@ public class RequestHandler implements Runnable {
             connectionOn = false;
         } catch (TimeoutException e) {
             response = Response.createErrorResponse(new RequestException("Timeout"));
-            LoggerUtil.logError("Timeout");
             connectionOn = false;
         } catch (Exception e) {
             response = Response.createErrorResponse(new InternalException("Unknown error"));
         } finally {
-            ResponseMessenger.sendResponse(outputStream, response);
+            trySendMessageOrCloseConnection(response);
         }
     }
 
@@ -84,12 +84,11 @@ public class RequestHandler implements Runnable {
             connectionOn = false;
         } catch (TimeoutException e) {
             response = Response.createErrorResponse(new RequestException("Timeout"));
-            LoggerUtil.logError("Timeout");
             connectionOn = false;
         } catch (Exception e) {
             response = Response.createErrorResponse(new InternalException("Unknown error"));
         } finally {
-            ResponseMessenger.sendResponse(outputStream, response);
+            trySendMessageOrCloseConnection(response);
         }
     }
 
@@ -117,7 +116,7 @@ public class RequestHandler implements Runnable {
         }
     }
 
-    private String readRequest() throws RequestException, TimeoutException {
+    private String readRequest() throws TimeoutException, RequestException {
         return RequestReader.read(dataInputStream);
     }
 
@@ -156,5 +155,13 @@ public class RequestHandler implements Runnable {
         connectionOn = true;
         ownerConnected = noConnectedRequest.getOwner();
         LoggerUtil.logTrace(ownerConnected + " entered");
+    }
+
+    private void trySendMessageOrCloseConnection(Response response) {
+        try {
+            ResponseMessenger.sendResponse(outputStream, response);
+        }  catch (WriteOutputStreamException e) {
+            connectionOn = false;
+        }
     }
 }
