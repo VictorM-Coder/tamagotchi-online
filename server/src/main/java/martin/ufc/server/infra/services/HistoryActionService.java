@@ -10,7 +10,7 @@ import martin.ufc.server.infra.request.types.RequestType;
 public class HistoryActionService {
     private HistoryActionService() {}
 
-    public static HistoryAction createHistoryAction(String username, RequestType actionType, int tamagotchiId) throws InternalException {
+    public static HistoryAction createHistoryAction(String username, String actionType, int tamagotchiId) throws InternalException {
         try {
             HistoryAction historyAction = new HistoryAction(username, tamagotchiId, actionType);
             int id = HistoryActionsRepository.add(historyAction);

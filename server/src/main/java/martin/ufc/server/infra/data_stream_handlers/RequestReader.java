@@ -23,7 +23,6 @@ public class RequestReader {
         }
     }
 
-    //TODO Adiconar uma exceçào que fecha a conexão caso ocorra
     private static String readInputStream(DataInputStream inputStream) throws TimeoutException {
         BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
         String request = "";

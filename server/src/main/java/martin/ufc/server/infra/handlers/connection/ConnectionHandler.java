@@ -1,19 +1,15 @@
 package martin.ufc.server.infra.handlers.connection;
 
-import martin.ufc.exception.InternalException;
-import martin.ufc.exception.WriteOutputStreamException;
-import martin.ufc.exception.RequestException;
-import martin.ufc.exception.TamagotchiNotFoundException;
+import martin.ufc.exception.*;
 import martin.ufc.server.infra.data_stream_handlers.RequestReader;
 import martin.ufc.server.infra.handlers.ActionsHandler;
-import martin.ufc.server.infra.handlers.CreateHandler;
 import martin.ufc.server.infra.request.action.ActionRequest;
 import martin.ufc.server.infra.request.factory.RequestFactoryProvider;
 import martin.ufc.server.infra.request.no_connected.ConnectionRequest;
 import martin.ufc.server.infra.request.no_connected.CreationRequest;
 import martin.ufc.server.infra.request.no_connected.NoConnectedRequest;
-import martin.ufc.server.infra.request.types.NoConnectedRequestType;
 import martin.ufc.server.infra.data_stream_handlers.ResponseMessenger;
+import martin.ufc.server.infra.request.types.NoConnectedRequestType;
 import martin.ufc.server.infra.response.dto.Response;
 import martin.ufc.server.infra.response.dto.ResponseBody;
 import martin.ufc.util.LoggerUtil;
@@ -72,13 +68,14 @@ public class ConnectionHandler implements Runnable {
             response = processor.runProcess();
         } catch (RequestException requestException) {
             response = Response.createErrorResponse(requestException);
-        } catch (TamagotchiNotFoundException | InternalException exception) {
+        } catch (TamagotchiNotFoundException | InternalException | InvalidConnectionException exception) {
             response = Response.createFailResponse(exception);
             connectionOn = false;
         } catch (TimeoutException e) {
             response = Response.createErrorResponse(new RequestException("Timeout"));
             connectionOn = false;
         } catch (Exception e) {
+            e.printStackTrace();
             response = Response.createErrorResponse(new InternalException("Unknown error"));
         } finally {
             trySendMessageOrCloseConnection(response);
@@ -91,24 +88,35 @@ public class ConnectionHandler implements Runnable {
             case SLEEP -> actionsHandler.handleSleepAction(actionRequest);
             case AWAKE -> actionsHandler.handleAwakeAction(actionRequest);
             case PLAY -> actionsHandler.handlePlayAction(actionRequest);
-            case GET -> actionsHandler.handleGetAction(actionRequest);
+            case GET -> actionsHandler.handleGetAction();
             case END -> endConnection();
         };
     }
 
-    private Response executeNoConnectedRequest(NoConnectedRequest noConnectedRequest) throws InternalException, RequestException, TamagotchiNotFoundException {
-        if (noConnectedRequest.getType() == (NoConnectedRequestType.CONNECT)) {
-            connect((ConnectionRequest) noConnectedRequest);
-            ResponseBody responseBody = actionsHandler.handleGetAction(new ActionRequest("GET"));
-            return Response.createSuccessResponse(responseBody);
+    private Response executeNoConnectedRequest(NoConnectedRequest noConnectedRequest) throws InternalException, TamagotchiNotFoundException, InvalidConnectionException {
+        return switch (noConnectedRequest.getType()) {
+            case CONNECT -> connectToTamagotchi((ConnectionRequest) noConnectedRequest);
+            case CREATE -> createTamagotchi(noConnectedRequest);
+        };
+    }
 
-        } else if (noConnectedRequest.getType() == NoConnectedRequestType.CREATE) {
-            ResponseBody responseBody = createTamagotchi((CreationRequest) noConnectedRequest);
-            return Response.createSuccessResponse(responseBody);
+    private Response connectToTamagotchi(ConnectionRequest noConnectedRequest) throws TamagotchiNotFoundException, InvalidConnectionException, InternalException {
+        Response response = NoConnectedRequestHandler.connectTamagotchi(noConnectedRequest);
+        connect(noConnectedRequest);
+        return response;
+    }
 
-        } else {
-            throw new RequestException("Request type not recognized");
-        }
+    private Response createTamagotchi(NoConnectedRequest noConnectedRequest) throws InternalException, InvalidConnectionException, TamagotchiNotFoundException {
+        CreationRequest creationRequest = (CreationRequest) noConnectedRequest;
+
+        int tamagotchiId = NoConnectedRequestHandler.createTamagotchi(creationRequest);
+        ConnectionRequest connectionRequest = new ConnectionRequest(
+                NoConnectedRequestType.CONNECT,
+                noConnectedRequest.getOwner(),
+                tamagotchiId
+        );
+
+        return connectToTamagotchi(connectionRequest);
     }
 
     private void trySendMessageOrCloseConnection(Response response) {
@@ -154,9 +162,5 @@ public class ConnectionHandler implements Runnable {
         } catch (IOException e) {
             LoggerUtil.logError("Error while closing the client");
         }
-    }
-
-    private ResponseBody createTamagotchi(CreationRequest noConnectedRequest) throws InternalException {
-        return CreateHandler.handleCreateAction(noConnectedRequest);
     }
 }

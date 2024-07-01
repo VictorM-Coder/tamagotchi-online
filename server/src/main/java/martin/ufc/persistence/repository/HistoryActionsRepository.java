@@ -4,7 +4,6 @@ import martin.ufc.exception.SQLiteException;
 import martin.ufc.model.history.History;
 import martin.ufc.model.history.HistoryAction;
 import martin.ufc.persistence.database.SQLiteStatement;
-import martin.ufc.server.infra.request.types.ActionType;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -21,7 +20,7 @@ public class HistoryActionsRepository {
         int id = statement
                 .setString(historyAction.getUsername())
                 .setInt(historyAction.getTamagotchiId())
-                .setString(historyAction.getAction().toString())
+                .setString(historyAction.getAction())
                 .setString(historyAction.getDateTime().toString())
                 .executeInsert();
 
@@ -37,7 +36,7 @@ public class HistoryActionsRepository {
         try (ResultSet resultSet = statement.setInt(tamagotchiId).executeQuery()) {
             while (resultSet.next()) {
                 String username = resultSet.getString("username");
-                ActionType action = ActionType.valueOf(resultSet.getString("action"));
+                String action = resultSet.getString("action");
                 LocalDateTime dateTime = LocalDateTime.parse(resultSet.getString("date_time"));
 
                 historyActions.add(new HistoryAction(username, tamagotchiId, action, dateTime));

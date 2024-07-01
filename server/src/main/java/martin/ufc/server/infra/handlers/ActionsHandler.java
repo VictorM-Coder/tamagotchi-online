@@ -47,7 +47,7 @@ public class ActionsHandler {
         return buildTamagotchiResponse(actionRequest, tamagotchi);
     }
 
-    public TamagotchiWithFullHistoryResponseBody handleGetAction(ActionRequest actionRequest) throws InternalException, TamagotchiNotFoundException {
+    public TamagotchiWithFullHistoryResponseBody handleGetAction() throws InternalException, TamagotchiNotFoundException {
         Tamagotchi tamagotchi = TamagotchiService.findTamagotchiById(getIdFromMessage());
         LoggerUtil.logTrace("get tamagotchi: " + tamagotchi.toJSON());
 
@@ -55,7 +55,7 @@ public class ActionsHandler {
     }
 
     private TamagotchiResponseBody buildTamagotchiResponse(ActionRequest actionRequest, Tamagotchi tamagotchi) throws InternalException {
-        HistoryAction historyAction = HistoryActionService.createHistoryAction(connectionRequest.getOwner(), actionRequest.getActionType(), getIdFromMessage());
+        HistoryAction historyAction = HistoryActionService.createHistoryAction(connectionRequest.getOwner(), actionRequest.getActionType().name(), getIdFromMessage());
         return new TamagotchiResponseBody(tamagotchi, historyAction);
     }
 
