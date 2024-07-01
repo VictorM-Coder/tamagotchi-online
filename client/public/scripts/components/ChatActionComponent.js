@@ -35,7 +35,7 @@ class ChatActionComponent extends HTMLElement {
                 return 'woke up the Tamagotchi.';
             case 'PLAY':
                 return 'played with the Tamagotchi.';
-            case 'NAME':
+            case 'CREATE':
                 return 'created the Tamagotchi.';
         }
     }

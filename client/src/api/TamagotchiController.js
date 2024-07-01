@@ -6,7 +6,7 @@ const TamagotchiService = require("./TamagotchiService");
 let service
 
 router.get('/connect', async (req, res) => {
-    service = new TamagotchiService()
+    service = createServiceIfNotExists()
     const username = req.query.username
     const id = req.query.id
 
@@ -16,6 +16,7 @@ router.get('/connect', async (req, res) => {
 
 
 router.post('/create', async (req, res) => {
+    service = createServiceIfNotExists()
     const username = req.body.username
     const tamagotchiName = req.body.tamagotchiName
 
@@ -52,5 +53,13 @@ router.get('/end', async (req, res) => {
     const response = await service.disconnectTamagotchi()
     res.send(response)
 });
+
+function createServiceIfNotExists() {
+    if (service) {
+        return service
+    } else {
+        return new TamagotchiService()
+    }
+}
 
 module.exports = router
